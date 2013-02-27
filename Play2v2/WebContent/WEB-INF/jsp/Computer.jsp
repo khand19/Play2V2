@@ -15,7 +15,7 @@
  
 	<header class="topbar">
 	<h1 class="fill">
-		<a href="/ProjectPlay2/Computers"> Kevin database </a>
+		<a href="/Play2v2/Computers"> Kevin database </a>
 	</h1>
 	</header>
 
@@ -49,7 +49,7 @@
 
 
 
-		<form action="/ProjectPlay2/Computers" method="GET">
+		<form action="/Play2v2/Computers" method="GET">
 
 			<input type="search" id="searchbox" name="f"
 				value="<c:if test="${param.f != null}">${param.f }</c:if>"
@@ -63,7 +63,7 @@
 		</form>
 
 
-		<a class="btn success" id="add" href="/ProjectPlay2/ComputerId">Add
+		<a class="btn success" id="add" href="/Play2v2/ComputerId">Add
 			a new computer</a>
 
 	</div>
@@ -75,7 +75,7 @@
 			<tr>
 
 				<th class="col2 header "><a
-									href="/ProjectPlay2/Computers?s=<c:if test="${param.s > 0}">-</c:if>1
+									href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>1
 				<c:if test="${param.f != null}">&f=${param.f }</c:if>">Computer	name</a>
 				</th>
 				
@@ -84,19 +84,19 @@
 
 
 				<th class="col3 header "><a
-					href="/ProjectPlay2/Computers?s=<c:if test="${param.s > 0}">-</c:if>2
+					href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>2
 				<c:if test="${param.f != null}">&f=${param.f }</c:if>">Introduced</a>
 				</th>
 
 
 				<th class="col4 header "><a
-					href="/ProjectPlay2/Computers?s=<c:if test="${param.s > 0}">-</c:if>3
+					href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>3
 				<c:if test="${param.f != null}">&f=${param.f }</c:if>">Discontinued</a>
 				</th>
 
 
 				<th class="col5 header headerSortUp"><a
-					href="/ProjectPlay2/Computers?s=<c:if test="${param.s > 0}">-</c:if>4
+					href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>4
 					<c:if test="${param.f != null}">&f=${param.f }</c:if>">Company</a></th>
 
 			</tr>
@@ -105,7 +105,7 @@
 
 			<c:forEach var="comp" items="${computer}">
 				<tr>
-					<td><a href="/ProjectPlay2/ComputerId?id=${comp.idComputer}">${comp.nameComputer}</a></td>
+					<td><a href="/Play2v2/ComputerId?id=${comp.idComputer}">${comp.nameComputer}</a></td>
 					<td><em>${comp.introduceDateWithFormat}</em></td>
 					<td><em>${comp.discountedsDateWithFormat}</em></td>
 					<td>${comp.company.nameCompany}</td>
@@ -124,7 +124,7 @@
 				</c:when>
 				<c:otherwise>
 					<li class="prev"><a
-						href="/ProjectPlay2/Computers?p=${numpage-1}
+						href="/Play2v2/Computers?p=${numpage-1}
 						<c:if test="${param.f != null}">
 							&f=${param.f }
 						</c:if>
@@ -152,7 +152,7 @@
 				</c:when>
 				<c:otherwise>
 					<li class="next"><a
-						href="/ProjectPlay2/Computers?p=${numpage+1}
+						href="/Play2v2/Computers?p=${numpage+1}
 						<c:if test="${param.f != null}">&f=${param.f }</c:if>
 						<c:if test="${param.s != null}">&s=${param.s }</c:if>						
 						">
