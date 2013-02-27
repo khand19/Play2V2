@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.dao.CompanyDAO;
-import com.excilys.dao.ComputerDAO;
+import com.excilys.service.CompanyService;
+import com.excilys.service.ComputerService;
 
 @WebServlet("/ComputerId")
 public class ComputerID extends HttpServlet {
@@ -24,11 +24,11 @@ public class ComputerID extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id") == null){
-			request.setAttribute("company", new CompanyDAO().getCompany());
+			request.setAttribute("company", new CompanyService().getCompany());
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp").forward( request, response );
 		}else{		
-			request.setAttribute("computer", new ComputerDAO().getComputerById(Integer.parseInt((String)request.getParameter("id"))));
-			request.setAttribute("company", new CompanyDAO().getCompany());
+			request.setAttribute("computer", new ComputerService().getComputerById(Integer.parseInt((String)request.getParameter("id"))));
+			request.setAttribute("company", new CompanyService().getCompany());
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp").forward( request, response );
 		}
 	}

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.bean.Computer;
-import com.excilys.dao.ComputerDAO;
+import com.excilys.service.ComputerService;
 
 /**
  * Servlet implementation class Computers
@@ -41,11 +41,11 @@ public class Computers extends HttpServlet {
 		
 		if (request.getParameter("f") != null){
 			String f = request.getParameter("f");
-			l = new ComputerDAO().getComputers(f,numPage*10,s);
-			nbEl = new ComputerDAO().getNbPages(f);
+			l = new ComputerService().getComputers(f,numPage*10,s);
+			nbEl = new ComputerService().getNbPages(f);
 		}else{
-			l = new ComputerDAO().getComputers(numPage*10,s);
-			nbEl = new ComputerDAO().getNbPages("");
+			l = new ComputerService().getComputers(numPage*10,s);
+			nbEl = new ComputerService().getNbPages("");
 		}
 		request.setAttribute("computer", l);
 		request.setAttribute("nbel",nbEl);

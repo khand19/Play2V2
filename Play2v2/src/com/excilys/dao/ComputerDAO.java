@@ -1,7 +1,6 @@
 package com.excilys.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -14,6 +13,11 @@ import com.excilys.bean.Company;
 import com.excilys.bean.Computer;
 
 public class ComputerDAO implements IComputerDAO {
+	private static final String SELECT_ORDER = "SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY ORDER BY ";
+	private static final String SELECT_LIKE_ORDER = "SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY WHERE UPPER(c.NAME) LIKE ? OR UPPER(d.NAMECOMPANY) LIKE ?  ORDER BY ";
+	private static final String DELETE = "DELETE FROM COMPUTER WHERE ID=";
+	private static final String SELECT_ID = "SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY WHERE c.ID=";
+	private static final String SELECT_ALL = "SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY ORDER BY UPPER(c.NAME) ASC;";
 	private final int NB_EL_PAGE = 10;
 
 	@Override
@@ -76,7 +80,7 @@ public class ComputerDAO implements IComputerDAO {
 		try {
 			stmt = cn.createStatement();
 			rs = stmt
-					.executeQuery("SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY ORDER BY UPPER(c.NAME) ASC;");
+					.executeQuery(SELECT_ALL);
 			while (rs.next()) {
 				Computer c = new Computer();
 				c.setCompany(new Company(rs.getInt(5), rs.getString(6)));
@@ -103,9 +107,7 @@ public class ComputerDAO implements IComputerDAO {
 		try {
 			stmt = cn.createStatement();
 			rs = stmt
-					.executeQuery("SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY "
-							+ "FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY WHERE c.ID="
-							+ pIdComputer);
+					.executeQuery(SELECT_ID	+ pIdComputer);
 			while (rs.next()) {
 				c.setCompany(new Company(rs.getInt(5), rs.getString(6)));
 				c.setIdComputer(rs.getInt(1));
@@ -134,7 +136,7 @@ public class ComputerDAO implements IComputerDAO {
 
 		try {
 			stmt = cn.createStatement();
-			stmt.executeUpdate("DELETE FROM COMPUTER WHERE ID=" + pIdComputer);
+			stmt.executeUpdate(DELETE + pIdComputer);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -220,8 +222,7 @@ public class ComputerDAO implements IComputerDAO {
 		Connection cn = Connexion.getConnexion();
 		List<Computer> liste = new ArrayList<Computer>();
 		try {
-			StringBuilder req = new StringBuilder("SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY " +
-					" WHERE UPPER(c.NAME) LIKE ? OR UPPER(d.NAMECOMPANY) LIKE ?  ORDER BY ");
+			StringBuilder req = new StringBuilder(SELECT_LIKE_ORDER);
 			int sprime = (int) s;
 			switch(sprime){
 				case 1:
@@ -276,8 +277,7 @@ public class ComputerDAO implements IComputerDAO {
 		List<Computer> liste = new ArrayList<Computer>();
 		try {
 			
-			StringBuilder req = new StringBuilder("SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY " +
-					" ORDER BY ");
+			StringBuilder req = new StringBuilder(SELECT_ORDER);
 			int sprime = (int) s;
 			switch(sprime){
 				case 1:

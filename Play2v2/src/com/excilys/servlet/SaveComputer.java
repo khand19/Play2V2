@@ -1,7 +1,6 @@
 package com.excilys.servlet;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.bean.Computer;
 import com.excilys.dao.CompanyDAO;
-import com.excilys.dao.ComputerDAO;
+import com.excilys.service.ComputerService;
 
 @WebServlet("/SaveComputer")
 public class SaveComputer extends HttpServlet {
@@ -36,8 +35,7 @@ public class SaveComputer extends HttpServlet {
 				.parseInt((String) request.getParameter("company"))));
 
 		boolean erreur = false;
-		DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-		
+
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		if(request.getParameter("introduced").equals(null) || request.getParameter("introduced").equals(""))
@@ -79,9 +77,9 @@ public class SaveComputer extends HttpServlet {
 					.forward(request, response);
 		} else {
 			if(request.getParameter("id") != null && request.getParameter("id")!=""){
-				new ComputerDAO().updateComputer(c);
+				new ComputerService().updateComputer(c);
 			}else{
-				new ComputerDAO().addComputer(c);
+				new ComputerService().addComputer(c);
 			}
 			
 			request.setAttribute("message", 2);
@@ -102,11 +100,11 @@ public class SaveComputer extends HttpServlet {
 			
 			if (request.getParameter("f") != null){
 				String f = request.getParameter("f");
-				l = new ComputerDAO().getComputers(f,numPage*10,s);
-				nbEl = new ComputerDAO().getNbPages(f);
+				l = new ComputerService().getComputers(f,numPage*10,s);
+				nbEl = new ComputerService().getNbPages(f);
 			}else{
-				l = new ComputerDAO().getComputers(numPage*10,s);
-				nbEl = new ComputerDAO().getNbPages("");
+				l = new ComputerService().getComputers(numPage*10,s);
+				nbEl = new ComputerService().getNbPages("");
 			}
 			request.setAttribute("computer", l);
 			request.setAttribute("nbel",nbEl);

@@ -1,11 +1,10 @@
-package com.excilys.dao;
+package com.excilys.service;
 
 import java.util.List;
 
 import com.excilys.bean.Computer;
 
-public interface IComputerDAO {
-
+public interface IComputerService {
 	public void addComputer(Computer pComputer);
 	
 	public List<Computer> getComputers();

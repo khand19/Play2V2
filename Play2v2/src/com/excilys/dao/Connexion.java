@@ -4,15 +4,19 @@ import java.sql.*;
 
 public class Connexion {
 
+	static {
+        try {
+			Class.forName("org.h2.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static Connection getConnexion() {
 		Connection conn = null;
 		try {
-			Class.forName("org.h2.Driver");
 			conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/ordinateur",
 					"sa", "");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
