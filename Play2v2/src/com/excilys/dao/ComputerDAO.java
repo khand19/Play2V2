@@ -21,8 +21,8 @@ public class ComputerDAO implements IComputerDAO {
 	private final int NB_EL_PAGE = 10;
 
 	@Override
-	public void addComputer(Computer pComputer) {
-		StringBuilder req = new StringBuilder("INSERT INTO COMPUTER SET  ");
+	public void addComputer(Computer pComputer, Connection c) {
+		StringBuilder req = new StringBuilder("INSERT INTO COMPUTER SET ");
 		if (!pComputer.equals(""))
 			req.append(" NAME=?,");
 		if (pComputer.getCompany().getIdCompany()!=0)
@@ -40,9 +40,8 @@ public class ComputerDAO implements IComputerDAO {
 		int incr = 1;
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		Connection cn = Connexion.getConnexion();
 		try {
-			stmt = cn.prepareStatement(new String(req));
+			stmt = c.prepareStatement(new String(req));
 
 			if (!pComputer.equals("")){
 				stmt.setString(incr, pComputer.getNameComputer());
@@ -67,7 +66,7 @@ public class ComputerDAO implements IComputerDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			Connexion.closeAll(rs, stmt, cn);
+			Connexion.closeAll(rs, stmt);
 		}	
 	}
 
@@ -130,22 +129,20 @@ public class ComputerDAO implements IComputerDAO {
 	}
 
 	@Override
-	public void deleteComputer(int pIdComputer) {
-		Connection cn = Connexion.getConnexion();
+	public void deleteComputer(int pIdComputer,Connection c) {
 		Statement stmt = null;
-
 		try {
-			stmt = cn.createStatement();
+			stmt = c.createStatement();
 			stmt.executeUpdate(DELETE + pIdComputer);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			Connexion.closeAll(null, stmt, cn);
+			Connexion.closeAll(null, stmt);
 		}
 	}
 
-	public void updateComputer(Computer pComputer) {
+	public void updateComputer(Computer pComputer,Connection c) {
 		Computer prec = this.getComputerById(pComputer.getIdComputer());
 
 		StringBuilder req = new StringBuilder("UPDATE COMPUTER SET  ");
@@ -174,9 +171,8 @@ public class ComputerDAO implements IComputerDAO {
 		int incr = 1;
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		Connection cn = Connexion.getConnexion();
 		try {
-			stmt = cn.prepareStatement(new String(req));
+			stmt = c.prepareStatement(new String(req));
 
 			if (!prec.getNameComputer().equals(pComputer.getNameComputer())
 					&& !pComputer.equals("")) {
@@ -210,7 +206,7 @@ public class ComputerDAO implements IComputerDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			Connexion.closeAll(rs, stmt, cn);
+			Connexion.closeAll(rs, stmt);
 		}
 	}
 

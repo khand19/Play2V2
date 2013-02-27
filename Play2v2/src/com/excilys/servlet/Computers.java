@@ -50,8 +50,7 @@ public class Computers extends HttpServlet {
 		request.setAttribute("computer", l);
 		request.setAttribute("nbel",nbEl);
 		request.setAttribute("numpage",numPage);
-
-
+		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Computer.jsp").forward(request, response);
 	}
 
