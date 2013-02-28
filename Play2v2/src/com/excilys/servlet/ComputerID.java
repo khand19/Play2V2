@@ -24,11 +24,11 @@ public class ComputerID extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id") == null){
-			request.setAttribute("company", new CompanyService().getCompany());
+			request.setAttribute("company", CompanyService.INSTANCE.getCompany());
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp").forward( request, response );
 		}else{		
-			request.setAttribute("computer", new ComputerService().getComputerById(Integer.parseInt((String)request.getParameter("id"))));
-			request.setAttribute("company", new CompanyService().getCompany());
+			request.setAttribute("computer", ComputerService.INSTANCE.getComputerById(Integer.parseInt((String)request.getParameter("id"))));
+			request.setAttribute("company", CompanyService.INSTANCE.getCompany());
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp").forward( request, response );
 		}
 	}

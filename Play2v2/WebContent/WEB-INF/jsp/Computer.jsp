@@ -12,7 +12,7 @@
 	href="css/main.css">
 </head>
 <body>
- 
+
 	<header class="topbar">
 	<h1 class="fill">
 		<a href="/Play2v2/Computers"> Kevin database </a>
@@ -63,8 +63,8 @@
 		</form>
 
 
-		<a class="btn success" id="add" href="/Play2v2/ComputerId">Add
-			a new computer</a>
+		<a class="btn success" id="add" href="/Play2v2/ComputerId">Add a
+			new computer</a>
 
 	</div>
 
@@ -75,11 +75,11 @@
 			<tr>
 
 				<th class="col2 header "><a
-									href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>1
-				<c:if test="${param.f != null}">&f=${param.f }</c:if>">Computer	name</a>
-				</th>
-				
-				
+					href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>1
+				<c:if test="${param.f != null}">&f=${param.f }</c:if>">Computer
+						name</a></th>
+
+
 
 
 

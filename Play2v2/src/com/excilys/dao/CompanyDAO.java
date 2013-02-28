@@ -8,8 +8,9 @@ import java.util.List;
 
 import com.excilys.bean.Company;
 
-public class CompanyDAO implements ICompanyDAO{
-
+public enum CompanyDAO implements ICompanyDAO{
+	INSTANCE;
+	
 	private static final String SELECT_ID = "SELECT IDCOMPANY, NAMECOMPANY FROM COMPANY WHERE IDCOMPANY=";
 	private static final String SELECT_ASC = "SELECT IDCOMPANY, NAMECOMPANY FROM COMPANY ORDER BY NAMECOMPANY ASC;";
 
@@ -17,7 +18,7 @@ public class CompanyDAO implements ICompanyDAO{
 	public List<Company> getCompany() {
 		ResultSet rs = null;
 		Statement stmt = null;
-		Connection cn = Connexion.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
 		List<Company> liste = new ArrayList<Company>();
 		try {
 			stmt = cn.createStatement();
@@ -31,7 +32,7 @@ public class CompanyDAO implements ICompanyDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			Connexion.closeAll(rs,stmt,cn);
+			DataSourceFactory.closeAll(rs,stmt,cn);
 		}
 		return liste;
 	}
@@ -40,7 +41,7 @@ public class CompanyDAO implements ICompanyDAO{
 	public Company getCompanyByID(int i) {
 		ResultSet rs = null;
 		Statement stmt = null;
-		Connection cn = Connexion.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
 		Company c = new Company();
 		try {
 			stmt = cn.createStatement();
@@ -53,7 +54,7 @@ public class CompanyDAO implements ICompanyDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			Connexion.closeAll(rs, stmt, cn);
+			DataSourceFactory.closeAll(rs, stmt, cn);
 		}
 		return c;
 	}

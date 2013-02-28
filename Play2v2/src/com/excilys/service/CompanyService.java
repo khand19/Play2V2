@@ -4,13 +4,11 @@ import java.util.List;
 
 import com.excilys.bean.Company;
 import com.excilys.dao.CompanyDAO;
+import com.excilys.dao.DAOFactory;
 
-public class CompanyService implements ICompanyService{
-	private CompanyDAO companyDao;
-	
-	public CompanyService(){
-		companyDao = new CompanyDAO();
-	}
+public enum CompanyService implements ICompanyService{
+	INSTANCE;
+	private CompanyDAO companyDao = DAOFactory.INSTANCE.getCompanyDAO();
 	
 	@Override
 	public List<Company> getCompany() {

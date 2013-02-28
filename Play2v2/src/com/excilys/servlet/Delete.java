@@ -23,7 +23,7 @@ public class Delete extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		new ComputerService().deleteComputer(Integer.parseInt((String)request.getParameter("id")));
+		ComputerService.INSTANCE.deleteComputer(Integer.parseInt((String)request.getParameter("id")));
 		request.setAttribute("message", 1);
 		
 		int numPage = 0;
@@ -41,11 +41,11 @@ public class Delete extends HttpServlet {
 		
 		if (request.getParameter("f") != null){
 			String f = request.getParameter("f");
-			l = new ComputerService().getComputers(f,numPage*10,s);
-			nbEl = new ComputerService().getNbPages(f);
+			l = ComputerService.INSTANCE.getComputers(f,numPage*10,s);
+			nbEl = ComputerService.INSTANCE.getNbPages(f);
 		}else{
-			l = new ComputerService().getComputers(numPage*10,s);
-			nbEl = new ComputerService().getNbPages("");
+			l = ComputerService.INSTANCE.getComputers(numPage*10,s);
+			nbEl = ComputerService.INSTANCE.getNbPages("");
 		}
 		request.setAttribute("computer", l);
 		request.setAttribute("nbel",nbEl);

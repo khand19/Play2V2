@@ -4,15 +4,13 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.excilys.bean.Log;
+import com.excilys.dao.DAOFactory;
 import com.excilys.dao.LogDAO;
 
-public class LogService implements ILogService{
-	private LogDAO logDao;
-	
-	public LogService(){
-		logDao = new LogDAO();
-	}
-	
+public enum LogService implements ILogService{
+	INSTANCE;
+	private LogDAO logDao = DAOFactory.INSTANCE.getLogDAO();
+		
 	@Override
 	public List<Log> getLog() {
 		return logDao.getLog();

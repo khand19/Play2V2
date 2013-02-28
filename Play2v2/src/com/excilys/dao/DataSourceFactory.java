@@ -5,52 +5,47 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.jolbox.bonecp.BoneCP;
-import com.jolbox.bonecp.BoneCPConfig;
+import com.jolbox.bonecp.BoneCPDataSource;
 
-public class Connexion {
+public enum DataSourceFactory {
+	INSTANCE;
 
 	private static final String PASSWORD = "";
 	private static final String USER = "sa";
 	private static final String URL = "jdbc:h2:tcp://localhost/~/ordinateur";
-	private static BoneCP connectionPool;
+	private static BoneCPDataSource connectionPool;
 
-	static {
-        try {
+	private DataSourceFactory() {
+		initialize();
+	}
+
+	public synchronized void initialize() {
+
+		try {
 			Class.forName("org.h2.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		try {
-//			conn = DriverManager.getConnection(URL,
-//					USER, PASSWORD);			
-			
-			BoneCPConfig config = new BoneCPConfig();
-			config.setJdbcUrl( URL );
-			config.setUsername( USER );
-			config.setPassword( PASSWORD );
-			     
-			config.setMinConnectionsPerPartition( 5 );
-			config.setMaxConnectionsPerPartition( 10 );
-			config.setPartitionCount( 2 );
-			     
-			connectionPool = new BoneCP( config );
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 connectionPool = new BoneCPDataSource();
+		 connectionPool.setJdbcUrl( URL );
+		 connectionPool.setUsername( USER );
+		 connectionPool.setPassword( PASSWORD );
+		
+		 connectionPool.setMinConnectionsPerPartition( 5 );
+		 connectionPool.setMaxConnectionsPerPartition( 10 );
+		 connectionPool.setPartitionCount( 2 );
 	}
-	
-	public static Connection getConnexion() {
+
+	public synchronized Connection getConnexion() {
 		try {
 			return connectionPool.getConnection();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Error in DataSourceFactory.getConn:"
+					+ e.getMessage());
 			return null;
 		}
 	}
-	
+
 	public static void closeAll(ResultSet rs, Statement stmt, Connection cn) {
 		try {
 			if (rs != null)
@@ -62,7 +57,7 @@ public class Connexion {
 		} catch (SQLException e) {
 		}
 	}
-	
+
 	public static void closeAll(ResultSet rs, Statement stmt) {
 		try {
 			if (rs != null)

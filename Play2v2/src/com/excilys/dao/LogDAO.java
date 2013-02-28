@@ -10,7 +10,8 @@ import java.util.List;
 
 import com.excilys.bean.Log;
 
-public class LogDAO implements ILogDAO{
+public enum LogDAO implements ILogDAO{
+	INSTANCE;
 	private static final String SELECT_ALL = "SELECT IDLOG,DATELOG,OPTIONLOG,COMPUTERLOG FROM LOG ORDER BY DATELOG ASC";
 	private static final String INSERT = "INSERT INTO LOG SET DATELOG=?,OPTIONLOG=?,COMPUTERLOG=?";
 
@@ -19,7 +20,7 @@ public class LogDAO implements ILogDAO{
 	public List<Log> getLog() {
 		ResultSet rs = null;
 		Statement stmt = null;
-		Connection cn = Connexion.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
 		List<Log> liste = new ArrayList<Log>();
 		try {
 			stmt = cn.createStatement();
@@ -35,7 +36,7 @@ public class LogDAO implements ILogDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			Connexion.closeAll(rs, stmt, cn);
+			DataSourceFactory.closeAll(rs, stmt, cn);
 		}
 		return liste;
 	}
@@ -44,7 +45,7 @@ public class LogDAO implements ILogDAO{
 	public void addLog(Log l,Connection c) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		Connection cn = Connexion.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
 		try {
 			stmt = cn.prepareStatement(new String(INSERT));
 			stmt.setObject(1, l.getDateLog());
@@ -54,7 +55,7 @@ public class LogDAO implements ILogDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			Connexion.closeAll(rs, stmt, cn);
+			DataSourceFactory.closeAll(rs, stmt, cn);
 		}			
 	}
 

@@ -9,31 +9,27 @@ import java.util.List;
 import com.excilys.bean.Computer;
 import com.excilys.bean.Log;
 import com.excilys.dao.ComputerDAO;
-import com.excilys.dao.Connexion;
+import com.excilys.dao.DAOFactory;
+import com.excilys.dao.DataSourceFactory;
 import com.excilys.dao.LogDAO;
 
-public class ComputerService implements IComputerService {
-	private ComputerDAO cDao;
-	private LogDAO logDao;
+public enum ComputerService implements IComputerService {
+	INSTANCE;
+	private ComputerDAO cDao = DAOFactory.INSTANCE.getComputerDAO();
+	private LogDAO logDao = DAOFactory.INSTANCE.getLogDAO();
 
-	public ComputerService() {
-		cDao = new ComputerDAO();
-		logDao = new LogDAO();
-
-	}
 
 	@Override
 	public void addComputer(Computer pComputer) {
-		new Connexion();
-		Connection c = Connexion.getConnexion();
+		Connection c = DataSourceFactory.INSTANCE.getConnexion();
 		try {
 			c.setAutoCommit(false);
 			Log l = new Log();
+			cDao.addComputer(pComputer, c);
 			Date now = Calendar.getInstance().getTime();
 			l.setDateLog(now);
 			l.setOptionLog("CREATE");
 			l.setComputerLog(pComputer.toString());
-			cDao.addComputer(pComputer, c);
 			logDao.addLog(l, c);
 			c.commit();
 			c.setAutoCommit(true);
@@ -65,8 +61,7 @@ public class ComputerService implements IComputerService {
 
 	@Override
 	public void deleteComputer(int pIdComputer) {
-		new Connexion();
-		Connection c = Connexion.getConnexion();
+		Connection c = DataSourceFactory.INSTANCE.getConnexion();
 		try {
 			c.setAutoCommit(false);
 			
@@ -93,8 +88,7 @@ public class ComputerService implements IComputerService {
 
 	@Override
 	public void updateComputer(Computer pComputer) {
-		new Connexion();
-		Connection c = Connexion.getConnexion();
+		Connection c = DataSourceFactory.INSTANCE.getConnexion();
 		try {
 			c.setAutoCommit(false);
 			

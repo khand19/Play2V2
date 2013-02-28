@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.bean.Computer;
+import com.excilys.bean.ListComputer;
 import com.excilys.service.ComputerService;
 
 /**
@@ -25,6 +26,7 @@ public class Computers extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		boolean error = false;
 		int numPage = 0;
 		try {
 			numPage = Integer.parseInt((String)request.getParameter("p"));
@@ -41,17 +43,27 @@ public class Computers extends HttpServlet {
 		
 		if (request.getParameter("f") != null){
 			String f = request.getParameter("f");
-			l = new ComputerService().getComputers(f,numPage*10,s);
-			nbEl = new ComputerService().getNbPages(f);
+//			ListComputer liste = new ComputerService().getComputers(f,numPage*10,s);			
+			l = ComputerService.INSTANCE.getComputers(f,numPage*10,s);
+			nbEl = ComputerService.INSTANCE.getNbPages(f);
 		}else{
-			l = new ComputerService().getComputers(numPage*10,s);
-			nbEl = new ComputerService().getNbPages("");
+			l = ComputerService.INSTANCE.getComputers(numPage*10,s);
+			nbEl = ComputerService.INSTANCE.getNbPages("");
 		}
 		request.setAttribute("computer", l);
 		request.setAttribute("nbel",nbEl);
 		request.setAttribute("numpage",numPage);
 		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Computer.jsp").forward(request, response);
+		
+//		try {
+//			Integer.parseInt("lol");
+//		} catch (Exception e) {
+//			error = true;
+//			new ErreurPerso(e,request,response,this.getServletContext());
+//		}
+		
+//		if(!error)
+			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Computer.jsp").forward(request, response);
 	}
 
 	/**

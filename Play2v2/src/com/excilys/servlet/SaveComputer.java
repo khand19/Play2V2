@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.excilys.bean.Company;
 import com.excilys.bean.Computer;
 import com.excilys.dao.CompanyDAO;
+import com.excilys.service.CompanyService;
 import com.excilys.service.ComputerService;
 
 @WebServlet("/SaveComputer")
@@ -21,7 +23,6 @@ public class SaveComputer extends HttpServlet {
 
 	public SaveComputer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -31,9 +32,13 @@ public class SaveComputer extends HttpServlet {
 		if(request.getParameter("id") != null && request.getParameter("id")!=""){
 			c.setIdComputer(Integer.parseInt((String) request.getParameter("id")));
 		}
-		c.setCompany(new CompanyDAO().getCompanyByID(Integer
+		if(!request.getParameter("company").equals("")){
+			c.setCompany(CompanyService.INSTANCE.getCompanyByID(Integer
 				.parseInt((String) request.getParameter("company"))));
-
+		}else{
+			c.setCompany(new Company(0,""));
+		}
+		
 		boolean erreur = false;
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,15 +76,15 @@ public class SaveComputer extends HttpServlet {
 		c.setNameComputer(request.getParameter("name"));
 		if (erreur) {
 			request.setAttribute("computer", c);
-			request.setAttribute("company", new CompanyDAO().getCompany());
+			request.setAttribute("company", CompanyService.INSTANCE.getCompany());
 			this.getServletContext()
 					.getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp")
 					.forward(request, response);
 		} else {
 			if(request.getParameter("id") != null && request.getParameter("id")!=""){
-				new ComputerService().updateComputer(c);
+				ComputerService.INSTANCE.updateComputer(c);
 			}else{
-				new ComputerService().addComputer(c);
+				ComputerService.INSTANCE.addComputer(c);
 			}
 			
 			request.setAttribute("message", 2);
@@ -100,16 +105,15 @@ public class SaveComputer extends HttpServlet {
 			
 			if (request.getParameter("f") != null){
 				String f = request.getParameter("f");
-				l = new ComputerService().getComputers(f,numPage*10,s);
-				nbEl = new ComputerService().getNbPages(f);
+				l = ComputerService.INSTANCE.getComputers(f,numPage*10,s);
+				nbEl = ComputerService.INSTANCE.getNbPages(f);
 			}else{
-				l = new ComputerService().getComputers(numPage*10,s);
-				nbEl = new ComputerService().getNbPages("");
+				l = ComputerService.INSTANCE.getComputers(numPage*10,s);
+				nbEl = ComputerService.INSTANCE.getNbPages("");
 			}
 			request.setAttribute("computer", l);
 			request.setAttribute("nbel",nbEl);
 			request.setAttribute("numpage",numPage);
-
 
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Computer.jsp").forward(request, response);
 		}
