@@ -7,7 +7,7 @@ import com.excilys.bean.Computer;
 
 public interface IComputerDAO {
 
-	public void addComputer(Computer pComputer,Connection c);
+	public void addComputer(Computer pComputer);
 	
 	public List<Computer> getComputers();
 	
@@ -15,9 +15,9 @@ public interface IComputerDAO {
 	
 	public Computer getComputerByName(String pNameComputer);
 	
-	public void deleteComputer(int pIdComputer,Connection c);
+	public void deleteComputer(int pIdComputer);
 	
-	public void updateComputer(Computer pComputer,Connection c);
+	public void updateComputer(Computer pComputer);
 	
 	public List<Computer> getComputers(String parameter,int i,double s);
 	

@@ -22,7 +22,8 @@ public enum ComputerDAO implements IComputerDAO {
 	private final int NB_EL_PAGE = 10;
 
 	@Override
-	public void addComputer(Computer pComputer, Connection c) {
+	public void addComputer(Computer pComputer) {
+		Connection c = DataSourceFactory.INSTANCE.getMonThreadConnexion().get();
 		StringBuilder req = new StringBuilder("INSERT INTO COMPUTER SET ");
 		if (!pComputer.equals(""))
 			req.append(" NAME=?,");
@@ -130,7 +131,8 @@ public enum ComputerDAO implements IComputerDAO {
 	}
 
 	@Override
-	public void deleteComputer(int pIdComputer, Connection c) {
+	public void deleteComputer(int pIdComputer) {
+		Connection c = DataSourceFactory.INSTANCE.getMonThreadConnexion().get();
 		Statement stmt = null;
 		try {
 			stmt = c.createStatement();
@@ -143,8 +145,10 @@ public enum ComputerDAO implements IComputerDAO {
 		}
 	}
 
-	public void updateComputer(Computer pComputer, Connection c) {
+	public void updateComputer(Computer pComputer) {
 		Computer prec = this.getComputerById(pComputer.getIdComputer());
+		Connection c = DataSourceFactory.INSTANCE.getMonThreadConnexion().get();
+
 
 		StringBuilder req = new StringBuilder("UPDATE COMPUTER SET  ");
 

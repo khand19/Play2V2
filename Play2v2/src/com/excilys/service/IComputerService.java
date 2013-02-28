@@ -3,6 +3,7 @@ package com.excilys.service;
 import java.util.List;
 
 import com.excilys.bean.Computer;
+import com.excilys.bean.ListComputer;
 
 public interface IComputerService {
 	public void addComputer(Computer pComputer);
@@ -17,9 +18,9 @@ public interface IComputerService {
 	
 	public void updateComputer(Computer pComputer);
 	
-	public List<Computer> getComputers(String parameter,int i,double s);
+	public ListComputer getComputers(String parameter,int i,double s);
 	
-	public List<Computer> getComputers(int i,double s);
+	public ListComputer getComputers(int i,double s);
 	
 	public int getNbPages(String parameter);
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.excilys.bean.Computer;
+import com.excilys.bean.ListComputer;
 import com.excilys.bean.Log;
 import com.excilys.dao.ComputerDAO;
 import com.excilys.dao.DAOFactory;
@@ -22,10 +23,12 @@ public enum ComputerService implements IComputerService {
 	@Override
 	public void addComputer(Computer pComputer) {
 		Connection c = DataSourceFactory.INSTANCE.getConnexion();
+		DataSourceFactory.INSTANCE.getMonThreadConnexion().set(c);
+		
 		try {
 			c.setAutoCommit(false);
 			Log l = new Log();
-			cDao.addComputer(pComputer, c);
+			cDao.addComputer(pComputer);
 			Date now = Calendar.getInstance().getTime();
 			l.setDateLog(now);
 			l.setOptionLog("CREATE");
@@ -62,6 +65,7 @@ public enum ComputerService implements IComputerService {
 	@Override
 	public void deleteComputer(int pIdComputer) {
 		Connection c = DataSourceFactory.INSTANCE.getConnexion();
+		DataSourceFactory.INSTANCE.getMonThreadConnexion().set(c);
 		try {
 			c.setAutoCommit(false);
 			
@@ -70,7 +74,7 @@ public enum ComputerService implements IComputerService {
 			l.setDateLog(now);
 			l.setOptionLog("Delete");
 			l.setComputerLog(this.getComputerById(pIdComputer).toString());	
-			cDao.deleteComputer(pIdComputer,c);
+			cDao.deleteComputer(pIdComputer);
 			logDao.addLog(l,c);
 			
 			c.commit();
@@ -89,6 +93,8 @@ public enum ComputerService implements IComputerService {
 	@Override
 	public void updateComputer(Computer pComputer) {
 		Connection c = DataSourceFactory.INSTANCE.getConnexion();
+		DataSourceFactory.INSTANCE.getMonThreadConnexion().set(c);
+
 		try {
 			c.setAutoCommit(false);
 			
@@ -97,7 +103,7 @@ public enum ComputerService implements IComputerService {
 			l.setDateLog(now);
 			l.setOptionLog("Uptade");
 			l.setComputerLog(pComputer.toString());
-			cDao.updateComputer(pComputer,c);
+			cDao.updateComputer(pComputer);
 			logDao.addLog(l,c);
 			
 			c.commit();
@@ -114,13 +120,16 @@ public enum ComputerService implements IComputerService {
 	}
 
 	@Override
-	public List<Computer> getComputers(String parameter, int i, double s) {
-		return cDao.getComputers(parameter, i, s);
+	public ListComputer getComputers(String parameter, int i, double s) {
+		return new ListComputer(cDao.getComputers(parameter,i,s),cDao.getNbPages(parameter));
+//		return cDao.getComputers(parameter, i, s);
 	}
 
+
 	@Override
-	public List<Computer> getComputers(int i, double s) {
-		return cDao.getComputers(i, s);
+	public ListComputer getComputers(int i, double s) {
+		return new ListComputer(cDao.getComputers(i,s),cDao.getNbPages(""));
+//		return cDao.getComputers(i, s);
 	}
 
 	@Override

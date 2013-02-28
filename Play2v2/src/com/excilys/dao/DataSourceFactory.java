@@ -13,8 +13,10 @@ public enum DataSourceFactory {
 	private static final String PASSWORD = "";
 	private static final String USER = "sa";
 	private static final String URL = "jdbc:h2:tcp://localhost/~/ordinateur";
-	private static BoneCPDataSource connectionPool;
-
+	protected static BoneCPDataSource connectionPool;
+	protected ThreadLocal<Connection> monThreadConnexion = new ThreadLocal<Connection>(); 
+	
+	
 	private DataSourceFactory() {
 		initialize();
 	}
@@ -66,5 +68,9 @@ public enum DataSourceFactory {
 				stmt.close();
 		} catch (SQLException e) {
 		}
+	}
+	
+	public ThreadLocal<Connection> getMonThreadConnexion(){
+		return monThreadConnexion;
 	}
 }

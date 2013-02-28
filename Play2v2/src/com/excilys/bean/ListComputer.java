@@ -6,6 +6,10 @@ public class ListComputer {
 	private List<Computer> listeComputer;
 	private int size;
 	
+	public ListComputer(List<Computer> list, int siz){
+		listeComputer = list;
+		size = siz;
+	}
 	
 	public List<Computer> getListeComputer() {
 		return listeComputer;
