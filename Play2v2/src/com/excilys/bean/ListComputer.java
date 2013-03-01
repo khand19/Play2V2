@@ -2,7 +2,7 @@ package com.excilys.bean;
 
 import java.util.List;
 
-public class ListComputer { 
+public class ListComputer {
 	private List<Computer> listeComputer;
 	private int size;
 	
