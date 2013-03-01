@@ -1,11 +1,5 @@
 package com.excilys.main;
 
-import java.util.List;
-
-import com.excilys.bean.Company;
-import com.excilys.bean.Computer;
-import com.excilys.dao.CompanyDAO;
-import com.excilys.dao.ComputerDAO;
 
 public class Test {
 

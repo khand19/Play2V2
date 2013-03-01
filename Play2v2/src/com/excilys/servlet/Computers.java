@@ -47,7 +47,8 @@ public class Computers extends HttpServlet {
 		request.setAttribute("nbel",liste.getSize());
 		request.setAttribute("numpage",numPage);
 		
-		
+
+
 //		try {
 //			Integer.parseInt("lol");
 //		} catch (Exception e) {

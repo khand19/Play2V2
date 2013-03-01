@@ -3,6 +3,7 @@ package com.excilys.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ public enum ComputerDAO implements IComputerDAO {
 
 	@Override
 	public void addComputer(Computer pComputer) {
-		Connection c = DataSourceFactory.INSTANCE.getMonThreadConnexion().get();
+		Connection c = DataSourceFactory.INSTANCE.getThreadConnexion();
 		StringBuilder req = new StringBuilder("INSERT INTO COMPUTER SET ");
 		if (!pComputer.equals(""))
 			req.append(" NAME=?,");
@@ -71,7 +72,12 @@ public enum ComputerDAO implements IComputerDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(rs, stmt);
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -79,7 +85,7 @@ public enum ComputerDAO implements IComputerDAO {
 	public List<Computer> getComputers() {
 		ResultSet rs = null;
 		Statement stmt = null;
-		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getThreadConnexion();
 		List<Computer> liste = new ArrayList<Computer>();
 		try {
 			stmt = cn.createStatement();
@@ -96,7 +102,13 @@ public enum ComputerDAO implements IComputerDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(rs, stmt, cn);
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return liste;
 	}
@@ -105,7 +117,7 @@ public enum ComputerDAO implements IComputerDAO {
 	public Computer getComputerById(int pIdComputer) {
 		ResultSet rs = null;
 		Statement stmt = null;
-		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getThreadConnexion();
 		Computer c = new Computer();
 		try {
 			stmt = cn.createStatement();
@@ -120,34 +132,38 @@ public enum ComputerDAO implements IComputerDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(rs, stmt, cn);
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return c;
 	}
 
 	@Override
-	public Computer getComputerByName(String pNameComputer) {
-		return null;
-	}
-
-	@Override
 	public void deleteComputer(int pIdComputer) {
-		Connection c = DataSourceFactory.INSTANCE.getMonThreadConnexion().get();
+		Connection c = DataSourceFactory.INSTANCE.getThreadConnexion();
 		Statement stmt = null;
 		try {
 			stmt = c.createStatement();
 			stmt.executeUpdate(DELETE + pIdComputer);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(null, stmt);
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public void updateComputer(Computer pComputer) {
 		Computer prec = this.getComputerById(pComputer.getIdComputer());
-		Connection c = DataSourceFactory.INSTANCE.getMonThreadConnexion().get();
+		Connection c = DataSourceFactory.INSTANCE.getThreadConnexion();
 
 
 		StringBuilder req = new StringBuilder("UPDATE COMPUTER SET  ");
@@ -187,7 +203,6 @@ public enum ComputerDAO implements IComputerDAO {
 			req.append(" WHERE ID=?");
 
 			int incr = 1;
-			ResultSet rs = null;
 			PreparedStatement stmt = null;
 			try {
 				stmt = c.prepareStatement(new String(req));
@@ -225,7 +240,11 @@ public enum ComputerDAO implements IComputerDAO {
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-				DataSourceFactory.closeAll(rs, stmt);
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -235,7 +254,7 @@ public enum ComputerDAO implements IComputerDAO {
 
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getThreadConnexion();
 		List<Computer> liste = new ArrayList<Computer>();
 		try {
 			StringBuilder req = new StringBuilder(SELECT_LIKE_ORDER);
@@ -281,7 +300,12 @@ public enum ComputerDAO implements IComputerDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(rs, stmt, cn);
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return liste;
 	}
@@ -289,7 +313,7 @@ public enum ComputerDAO implements IComputerDAO {
 	public List<Computer> getComputers(int i, double s) {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getThreadConnexion();
 		List<Computer> liste = new ArrayList<Computer>();
 		try {
 
@@ -334,7 +358,12 @@ public enum ComputerDAO implements IComputerDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(rs, stmt, cn);
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return liste;
 	}
@@ -344,7 +373,7 @@ public enum ComputerDAO implements IComputerDAO {
 
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getThreadConnexion();
 		int nbValues = 0;
 		try {
 			String rq = "SELECT c.ID FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY "
@@ -359,7 +388,13 @@ public enum ComputerDAO implements IComputerDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(rs, stmt, cn);
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return nbValues;
 	}

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import com.excilys.bean.Computer;
 import com.excilys.bean.ListComputer;
@@ -22,9 +21,7 @@ public enum ComputerService implements IComputerService {
 
 	@Override
 	public void addComputer(Computer pComputer) {
-		Connection c = DataSourceFactory.INSTANCE.getConnexion();
-		DataSourceFactory.INSTANCE.getMonThreadConnexion().set(c);
-		
+		Connection c = DataSourceFactory.INSTANCE.getThreadConnexion();
 		try {
 			c.setAutoCommit(false);
 			Log l = new Log();
@@ -33,39 +30,30 @@ public enum ComputerService implements IComputerService {
 			l.setDateLog(now);
 			l.setOptionLog("CREATE");
 			l.setComputerLog(pComputer.toString());
-			logDao.addLog(l, c);
+			logDao.addLog(l);
 			c.commit();
 			c.setAutoCommit(true);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		} finally {
-			try {
-				c.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			DataSourceFactory.INSTANCE.closeConnexion();
 		}
 	}
 
-	@Override
-	public List<Computer> getComputers() {
-		return cDao.getComputers();
-	}
+//	@Override
+//	public List<Computer> getComputers() {
+//		return cDao.getComputers();
+//	}
 
 	@Override
 	public Computer getComputerById(int pIdComputer) {
-		return cDao.getComputerById(pIdComputer);
-	}
-
-	@Override
-	public Computer getComputerByName(String pNameComputer) {
-		return cDao.getComputerByName(pNameComputer);
+		Computer c = cDao.getComputerById(pIdComputer);
+		return c;
 	}
 
 	@Override
 	public void deleteComputer(int pIdComputer) {
-		Connection c = DataSourceFactory.INSTANCE.getConnexion();
-		DataSourceFactory.INSTANCE.getMonThreadConnexion().set(c);
+		Connection c = DataSourceFactory.INSTANCE.getThreadConnexion();
 		try {
 			c.setAutoCommit(false);
 			
@@ -75,25 +63,19 @@ public enum ComputerService implements IComputerService {
 			l.setOptionLog("Delete");
 			l.setComputerLog(this.getComputerById(pIdComputer).toString());	
 			cDao.deleteComputer(pIdComputer);
-			logDao.addLog(l,c);
-			
+			logDao.addLog(l);
 			c.commit();
 			c.setAutoCommit(true);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		} finally {
-			try {
-				c.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			DataSourceFactory.INSTANCE.closeConnexion();
 		}
 	}
 
 	@Override
 	public void updateComputer(Computer pComputer) {
-		Connection c = DataSourceFactory.INSTANCE.getConnexion();
-		DataSourceFactory.INSTANCE.getMonThreadConnexion().set(c);
+		Connection c = DataSourceFactory.INSTANCE.getThreadConnexion();
 
 		try {
 			c.setAutoCommit(false);
@@ -104,32 +86,30 @@ public enum ComputerService implements IComputerService {
 			l.setOptionLog("Uptade");
 			l.setComputerLog(pComputer.toString());
 			cDao.updateComputer(pComputer);
-			logDao.addLog(l,c);
+			logDao.addLog(l);
 			
 			c.commit();
 			c.setAutoCommit(true);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		} finally {
-			try {
-				c.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			DataSourceFactory.INSTANCE.closeConnexion();
 		}
 	}
 
 	@Override
 	public ListComputer getComputers(String parameter, int i, double s) {
-		return new ListComputer(cDao.getComputers(parameter,i,s),cDao.getNbPages(parameter));
-//		return cDao.getComputers(parameter, i, s);
+		ListComputer l = new ListComputer(cDao.getComputers(parameter,i,s),cDao.getNbPages(parameter));
+		DataSourceFactory.INSTANCE.closeConnexion();
+		return l;
 	}
 
 
 	@Override
 	public ListComputer getComputers(int i, double s) {
-		return new ListComputer(cDao.getComputers(i,s),cDao.getNbPages(""));
-//		return cDao.getComputers(i, s);
+		ListComputer l = new ListComputer(cDao.getComputers(i,s),cDao.getNbPages(""));
+		DataSourceFactory.INSTANCE.closeConnexion();
+		return l;
 	}
 
 	@Override

@@ -2,15 +2,16 @@ package com.excilys.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.excilys.bean.Company;
 
-public enum CompanyDAO implements ICompanyDAO{
+public enum CompanyDAO implements ICompanyDAO {
 	INSTANCE;
-	
+
 	private static final String SELECT_ID = "SELECT IDCOMPANY, NAMECOMPANY FROM COMPANY WHERE IDCOMPANY=";
 	private static final String SELECT_ASC = "SELECT IDCOMPANY, NAMECOMPANY FROM COMPANY ORDER BY NAMECOMPANY ASC;";
 
@@ -18,7 +19,7 @@ public enum CompanyDAO implements ICompanyDAO{
 	public List<Company> getCompany() {
 		ResultSet rs = null;
 		Statement stmt = null;
-		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getThreadConnexion();
 		List<Company> liste = new ArrayList<Company>();
 		try {
 			stmt = cn.createStatement();
@@ -32,7 +33,13 @@ public enum CompanyDAO implements ICompanyDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(rs,stmt,cn);
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return liste;
 	}
@@ -41,12 +48,11 @@ public enum CompanyDAO implements ICompanyDAO{
 	public Company getCompanyByID(int i) {
 		ResultSet rs = null;
 		Statement stmt = null;
-		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getThreadConnexion();
 		Company c = new Company();
 		try {
 			stmt = cn.createStatement();
-			rs = stmt
-					.executeQuery(SELECT_ID+ i);
+			rs = stmt.executeQuery(SELECT_ID + i);
 			while (rs.next()) {
 				c.setIdCompany(rs.getInt(1));
 				c.setNameCompany(rs.getString(2));
@@ -54,7 +60,13 @@ public enum CompanyDAO implements ICompanyDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(rs, stmt, cn);
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return c;
 	}

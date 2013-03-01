@@ -1,6 +1,5 @@
 package com.excilys.service;
 
-import java.sql.Connection;
 import java.util.List;
 
 import com.excilys.bean.Log;
@@ -17,8 +16,8 @@ public enum LogService implements ILogService{
 	}
 
 	@Override
-	public void addLog(Log l,Connection c) {
-		logDao.addLog(l,c);
+	public void addLog(Log l) {
+		logDao.addLog(l);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.excilys.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,11 +17,10 @@ public enum LogDAO implements ILogDAO{
 	private static final String INSERT = "INSERT INTO LOG SET DATELOG=?,OPTIONLOG=?,COMPUTERLOG=?";
 
 	
-	@Override
 	public List<Log> getLog() {
 		ResultSet rs = null;
 		Statement stmt = null;
-		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getThreadConnexion();
 		List<Log> liste = new ArrayList<Log>();
 		try {
 			stmt = cn.createStatement();
@@ -36,16 +36,20 @@ public enum LogDAO implements ILogDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DataSourceFactory.closeAll(rs, stmt, cn);
+			try {
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return liste;
 	}
 
 	@Override
-	public void addLog(Log l,Connection c) {
-		ResultSet rs = null;
+	public void addLog(Log l) {
 		PreparedStatement stmt = null;
-		Connection cn = DataSourceFactory.INSTANCE.getConnexion();
+		Connection cn = DataSourceFactory.INSTANCE.getThreadConnexion();
 		try {
 			stmt = cn.prepareStatement(new String(INSERT));
 			stmt.setObject(1, l.getDateLog());
@@ -54,9 +58,13 @@ public enum LogDAO implements ILogDAO{
 			stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			DataSourceFactory.closeAll(rs, stmt, cn);
-		}			
+		}  finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
 	}
 
 }
