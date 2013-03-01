@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+	<javaee:display-name>ProjetWeb</javaee:display-name>
+	<servlet>
+		<javaee:description></javaee:description>
+		<javaee:display-name>Computers</javaee:display-name>
+		<servlet-name>Computers</servlet-name>
+		<servlet-class>com.excilys.servlet</servlet-class>
+	</servlet>
+	<servlet>
+		<javaee:description></javaee:description>
+		<javaee:display-name>ComputerID</javaee:display-name>
+		<servlet-name>ComputerID</servlet-name>
+		<servlet-class>com.excilys.servlet</servlet-class>
+	</servlet>
+	<servlet>
+		<javaee:description></javaee:description>
+		<javaee:display-name>Delete</javaee:display-name>
+		<servlet-name>Delete</servlet-name>
+		<servlet-class>com.excilys.servlet</servlet-class>
+	</servlet>
+	<servlet>
+		<javaee:description></javaee:description>
+		<javaee:display-name>LookFor</javaee:display-name>
+		<servlet-name>LookFor</servlet-name>
+		<servlet-class>com.excilys.servlet</servlet-class>
+	</servlet>
+</web-app>
