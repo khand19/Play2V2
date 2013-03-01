@@ -8,29 +8,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.excilys.bean.ListComputer;
 import com.excilys.service.ComputerService;
 
-@WebServlet("/Delete")
-public class Delete extends HttpServlet {
+/**
+ * Servlet implementation class Computers
+ */
+@WebServlet("/Computers")
+public class Computers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	public Delete() {
+	
+	@Autowired
+	private ComputerService computerService;
+	
+	
+    public Computers() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ComputerService.INSTANCE.deleteComputer(Integer.parseInt((String)request.getParameter("id")));
-		request.setAttribute("message", 1);
-		
 		int numPage = 0;
 		try {
 			numPage = Integer.parseInt((String)request.getParameter("p"));
 		} catch (Exception e) {
-		}	
-
+		}		
 		
 		double s = 0;
 		if (request.getParameter("s") != null){
@@ -40,14 +44,23 @@ public class Delete extends HttpServlet {
 		ListComputer liste = null;
 		if (request.getParameter("f") != null){
 			String f = request.getParameter("f");
-			liste = ComputerService.INSTANCE.getComputers(f,numPage*10,s);			
+			liste = computerService.getComputers(f,numPage*10,s);			
 		}else{
-			liste = ComputerService.INSTANCE.getComputers(numPage*10,s);
+			liste = computerService.getComputers(numPage*10,s);
 		}
 		request.setAttribute("computer", liste.getListeComputer());
 		request.setAttribute("nbel",liste.getSize());
 		request.setAttribute("numpage",numPage);
 		
+		if (request.getParameter("name") != null){
+			request.setAttribute("message", 2);
+			request.setAttribute("name", request.getParameter("name"));	
+		}
+		
+		if (request.getParameter("delete") != null){
+			request.setAttribute("message", 1);
+		}
+
 		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Computer.jsp").forward(request, response);
 	}
 
@@ -55,6 +68,7 @@ public class Delete extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request,response);
+		// TODO Auto-generated method stub
 	}
+
 }

@@ -7,10 +7,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.excilys.bean.Company;
 
-public enum CompanyDAO implements ICompanyDAO {
-	INSTANCE;
+@Repository
+public class CompanyDAO implements ICompanyDAO {
 
 	private static final String SELECT_ID = "SELECT IDCOMPANY, NAMECOMPANY FROM COMPANY WHERE IDCOMPANY=";
 	private static final String SELECT_ASC = "SELECT IDCOMPANY, NAMECOMPANY FROM COMPANY ORDER BY NAMECOMPANY ASC;";

@@ -5,18 +5,24 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
 import com.excilys.bean.Computer;
 import com.excilys.bean.ListComputer;
 import com.excilys.bean.Log;
 import com.excilys.dao.ComputerDAO;
-import com.excilys.dao.DAOFactory;
 import com.excilys.dao.DataSourceFactory;
 import com.excilys.dao.LogDAO;
 
-public enum ComputerService implements IComputerService {
-	INSTANCE;
-	private ComputerDAO cDao = DAOFactory.INSTANCE.getComputerDAO();
-	private LogDAO logDao = DAOFactory.INSTANCE.getLogDAO();
+@Service
+public class ComputerService implements IComputerService {
+
+	@Autowired
+	private ComputerDAO cDao;
+	@Autowired
+	private LogDAO logDao;
 
 
 	@Override

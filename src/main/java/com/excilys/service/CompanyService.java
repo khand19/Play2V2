@@ -2,13 +2,18 @@ package com.excilys.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
 import com.excilys.bean.Company;
 import com.excilys.dao.CompanyDAO;
-import com.excilys.dao.DAOFactory;
 
-public enum CompanyService implements ICompanyService{
-	INSTANCE;
-	private CompanyDAO companyDao = DAOFactory.INSTANCE.getCompanyDAO();
+@Service
+public class CompanyService implements ICompanyService{
+	
+	@Autowired
+	private CompanyDAO companyDao;
 	
 	@Override
 	public List<Company> getCompany() {

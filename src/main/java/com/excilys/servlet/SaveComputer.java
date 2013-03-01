@@ -10,15 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.excilys.bean.Company;
 import com.excilys.bean.Computer;
-import com.excilys.bean.ListComputer;
 import com.excilys.service.CompanyService;
 import com.excilys.service.ComputerService;
 
 @WebServlet("/SaveComputer")
 public class SaveComputer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@Autowired
+	private CompanyService companyService;
+	@Autowired
+	private ComputerService computerService;
 
 	public SaveComputer() {
 		super();
@@ -32,7 +37,7 @@ public class SaveComputer extends HttpServlet {
 			c.setIdComputer(Integer.parseInt((String) request.getParameter("id")));
 		}
 		if(!request.getParameter("company").equals("")){
-			c.setCompany(CompanyService.INSTANCE.getCompanyByID(Integer
+			c.setCompany(companyService.getCompanyByID(Integer
 				.parseInt((String) request.getParameter("company"))));
 		}else{
 			c.setCompany(new Company(0,""));
@@ -75,43 +80,17 @@ public class SaveComputer extends HttpServlet {
 		c.setNameComputer(request.getParameter("name"));
 		if (erreur) {
 			request.setAttribute("computer", c);
-			request.setAttribute("company", CompanyService.INSTANCE.getCompany());
+			request.setAttribute("company", companyService.getCompany());
 			this.getServletContext()
 					.getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp")
 					.forward(request, response);
 		} else {
 			if(request.getParameter("id") != null && request.getParameter("id")!=""){
-				ComputerService.INSTANCE.updateComputer(c);
+				computerService.updateComputer(c);
 			}else{
-				ComputerService.INSTANCE.addComputer(c);
+				computerService.addComputer(c);
 			}
-			
-			request.setAttribute("message", 2);
-			request.setAttribute("name", c.getNameComputer());			
-			
-			int numPage = 0;
-			try {
-				numPage = Integer.parseInt((String)request.getParameter("p"));
-			} catch (Exception e) {
-			}
-			
-			double s = 0;
-			if (request.getParameter("s") != null){
-				s = Double.parseDouble((String) request.getParameter("s"));			
-			}
-			
-			ListComputer liste = null;
-			if (request.getParameter("f") != null){
-				String f = request.getParameter("f");
-				liste = ComputerService.INSTANCE.getComputers(f,numPage*10,s);			
-			}else{
-				liste = ComputerService.INSTANCE.getComputers(numPage*10,s);
-			}
-			request.setAttribute("computer", liste.getListeComputer());
-			request.setAttribute("nbel",liste.getSize());
-			request.setAttribute("numpage",numPage);
-
-			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Computer.jsp").forward(request, response);
+			response.sendRedirect("Computers?name="+c.getNameComputer());
 		}
 	}
 

@@ -10,11 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.excilys.bean.Company;
 import com.excilys.bean.Computer;
 
-public enum ComputerDAO implements IComputerDAO {
-	INSTANCE;
+@Repository
+public class ComputerDAO implements IComputerDAO {
 	private static final String SELECT_ORDER = "SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY ORDER BY ";
 	private static final String SELECT_LIKE_ORDER = "SELECT c.ID, c.NAME, c.INTRODUCED, c.DISCONTINUED, c.IDCOMPANY, d.NAMECOMPANY FROM COMPUTER c LEFT JOIN COMPANY d ON c.IDCOMPANY=d.IDCOMPANY WHERE UPPER(c.NAME) LIKE ? OR UPPER(d.NAMECOMPANY) LIKE ?  ORDER BY ";
 	private static final String DELETE = "DELETE FROM COMPUTER WHERE ID=";
@@ -392,7 +394,6 @@ public enum ComputerDAO implements IComputerDAO {
 				rs.close();
 				stmt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
