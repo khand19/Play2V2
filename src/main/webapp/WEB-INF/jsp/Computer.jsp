@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.excilys.dao.CompanyDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -49,7 +48,7 @@
 
 
 
-		<form action="/Play2v2/Computers" method="GET">
+		<form action="/Play2v2/Computers.html" method="GET">
 
 			<input type="search" id="searchbox" name="f"
 				value="<c:if test="${param.f != null}">${param.f }</c:if>"
@@ -63,7 +62,7 @@
 		</form>
 
 
-		<a class="btn success" id="add" href="/Play2v2/ComputerId">Add a
+		<a class="btn success" id="add" href="/Play2v2/ComputerId.html">Add a
 			new computer</a>
 
 	</div>
@@ -75,7 +74,7 @@
 			<tr>
 
 				<th class="col2 header "><a
-					href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>1
+					href="/Play2v2/Computers.html?s=<c:if test="${param.s > 0}">-</c:if>1
 				<c:if test="${param.f != null}">&f=${param.f }</c:if>">Computer
 						name</a></th>
 
@@ -84,19 +83,19 @@
 
 
 				<th class="col3 header "><a
-					href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>2
+					href="/Play2v2/Computers.html?s=<c:if test="${param.s > 0}">-</c:if>2
 				<c:if test="${param.f != null}">&f=${param.f }</c:if>">Introduced</a>
 				</th>
 
 
 				<th class="col4 header "><a
-					href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>3
+					href="/Play2v2/Computers.html?s=<c:if test="${param.s > 0}">-</c:if>3
 				<c:if test="${param.f != null}">&f=${param.f }</c:if>">Discontinued</a>
 				</th>
 
 
 				<th class="col5 header headerSortUp"><a
-					href="/Play2v2/Computers?s=<c:if test="${param.s > 0}">-</c:if>4
+					href="/Play2v2/Computers.html?s=<c:if test="${param.s > 0}">-</c:if>4
 					<c:if test="${param.f != null}">&f=${param.f }</c:if>">Company</a></th>
 
 			</tr>
@@ -124,7 +123,7 @@
 				</c:when>
 				<c:otherwise>
 					<li class="prev"><a
-						href="/Play2v2/Computers?p=${numpage-1}
+						href="/Play2v2/Computers.html?p=${numpage-1}
 						<c:if test="${param.f != null}">
 							&f=${param.f }
 						</c:if>
@@ -152,7 +151,7 @@
 				</c:when>
 				<c:otherwise>
 					<li class="next"><a
-						href="/Play2v2/Computers?p=${numpage+1}
+						href="/Play2v2/Computers.html?p=${numpage+1}
 						<c:if test="${param.f != null}">&f=${param.f }</c:if>
 						<c:if test="${param.s != null}">&s=${param.s }</c:if>						
 						">

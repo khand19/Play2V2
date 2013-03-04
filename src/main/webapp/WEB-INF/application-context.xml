@@ -13,4 +13,23 @@
 	<context:component-scan base-package="com.excilys.bean" />
 	<context:component-scan base-package="com.excilys.dao" />
 	<context:component-scan base-package="com.excilys.service" />
+	
+	<bean id="computerDataSource" class="com.jolbox.bonecp.BoneCPDataSource">
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost/~/ordinateur" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+		<property name="idleConnectionTestPeriodInMinutes" value="60" />
+		<property name="idleMaxAgeInMinutes" value="240" />
+		<property name="maxConnectionsPerPartition" value="10" />
+		<property name="minConnectionsPerPartition" value="2" />
+		<property name="partitionCount" value="1" />
+		<property name="acquireIncrement" value="2" />
+		<property name="statementsCacheSize" value="100" />
+		<property name="releaseHelperThreads" value="3" />
+	</bean>
+
+	<bean id="computerJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="computerDataSource" />
+	</bean>
 </beans>
