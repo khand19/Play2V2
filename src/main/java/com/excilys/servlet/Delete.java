@@ -25,8 +25,8 @@ public class Delete extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		computerService.deleteComputer(Integer.parseInt((String)request.getParameter("id")));
-		response.sendRedirect("Computers?delete=true");
+//		computerService.deleteComputer(Integer.parseInt((String)request.getParameter("id")));
+//		response.sendRedirect("Computers?delete=true");
 	}
 
 	/**

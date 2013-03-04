@@ -31,14 +31,14 @@ public class ComputerID extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("id") == null){
-			request.setAttribute("company", companyService.getCompany());
-			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp").forward( request, response );
-		}else{		
-			request.setAttribute("computer", computerService.getComputerById(Integer.parseInt((String)request.getParameter("id"))));
-			request.setAttribute("company", companyService.getCompany());
-			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp").forward( request, response );
-		}
+//		if(request.getParameter("id") == null){
+//			request.setAttribute("company", companyService.getCompany());
+//			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp").forward( request, response );
+//		}else{		
+//			request.setAttribute("computer", computerService.getComputerById(Integer.parseInt((String)request.getParameter("id"))));
+//			request.setAttribute("company", companyService.getCompany());
+//			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/InfoComputer.jsp").forward( request, response );
+//		}
 	}
 
 	/**

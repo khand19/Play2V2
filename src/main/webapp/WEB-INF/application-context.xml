@@ -10,5 +10,7 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
 	<context:annotation-config/>
-	<context:component-scan base-package="com.excilys" />
+	<context:component-scan base-package="com.excilys.bean" />
+	<context:component-scan base-package="com.excilys.dao" />
+	<context:component-scan base-package="com.excilys.service" />
 </beans>

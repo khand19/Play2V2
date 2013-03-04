@@ -11,12 +11,12 @@
 <body>
 	<header class="topbar">
 	<h1 class="fill">
-		<a href="/Play2v2/Computers"> Kevin database </a>
+		<a href="/Play2v2/Computers.html"> Kevin database </a>
 	</h1>
 	</header>
 	<section id="main">
 		<h1>Edit computer</h1>
-		<form action="/Play2v2/SaveComputer" method="GET">
+		<form action="/Play2v2/SaveComputer.html" method="GET">
 			<fieldset>
 				<div class="clearfix ">
 					<label for="name">Computer name</label>
@@ -110,7 +110,7 @@
 
 			<div class="actions">
 				<input type="submit" value="Save this computer" class="btn primary">
-				or <a href="/Play2v2/Computers" class="btn">Cancel</a>
+				or <a href="/Play2v2/Computers.html" class="btn">Cancel</a>
 			</div>
 
 
@@ -119,7 +119,7 @@
 
 
 
-		<form action="/Play2v2/Delete?id=${computer.idComputer}" method="POST" class="topRight">
+		<form action="/Play2v2/Delete.html?id=${computer.idComputer}" method="POST" class="topRight">
 			<input type="submit" value="Delete this computer" class="btn danger">
 		</form>
 
