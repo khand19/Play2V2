@@ -15,7 +15,7 @@
 
 	<header class="topbar">
 	<h1 class="fill">
-		<a href="/Play2v2/Computers"> Kevin database </a>
+		<a href="/Play2v2/Computers.html"> Kevin database </a>
 	</h1>
 	</header>
 
@@ -105,7 +105,7 @@
 
 			<c:forEach var="comp" items="${computer}">
 				<tr>
-					<td><a href="/Play2v2/ComputerId?id=${comp.idComputer}">${comp.nameComputer}</a></td>
+					<td><a href="/Play2v2/ComputerId.html?id=${comp.idComputer}">${comp.nameComputer}</a></td>
 					<td><em>${comp.introduceDateWithFormat}</em></td>
 					<td><em>${comp.discountedsDateWithFormat}</em></td>
 					<td>${comp.company.nameCompany}</td>
