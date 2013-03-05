@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,15 +21,20 @@ public class Computer {
 	@GeneratedValue
 	@Column(name = "ID")
 	private int idComputer;
+	
 	@Column(name = "NAME")
 	private String nameComputer;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "INTRODUCED")
 	private Date introducedDate;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DISCONTINUED")
 	private Date dscountedDate;
-	@Column(name = "IDCOMPANY")
+	
+	@ManyToOne
+    @JoinColumn(name="IDCOMPANY")
 	private Company company;
 	
 	public Computer(){
@@ -60,12 +67,23 @@ public class Computer {
 		this.dscountedDate = dscountedDate;
 	}
 	public Company getCompany() {
-		if(company.getIdCompany()==0)
-			return new Company();
+		try {
+			if(company == null && company.getIdCompany()==0)
+				return null;
+		} catch (Exception e) {
+				return null;
+		}
 		return company;
 	}
 	public void setCompany(Company company) {
+		try {
+			if(company.getIdCompany()==0)
+				this.company = null;
+		} catch (Exception e) {
+			this.company =  null;
+		}
 		this.company = company;
+		System.out.println(this.toString());
 	}
 	public String getIntroduceDateWithFormat(){
 		DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
@@ -90,7 +108,52 @@ public class Computer {
 				+ "]";
 	}
 	
-	public boolean equals(Object o){
-		return false;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((company == null) ? 0 : company.hashCode());
+		result = prime * result
+				+ ((dscountedDate == null) ? 0 : dscountedDate.hashCode());
+		result = prime * result + idComputer;
+		result = prime * result
+				+ ((introducedDate == null) ? 0 : introducedDate.hashCode());
+		result = prime * result
+				+ ((nameComputer == null) ? 0 : nameComputer.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Computer other = (Computer) obj;
+		if (company == null) {
+			if (other.company != null)
+				return false;
+		} else if (!company.equals(other.company))
+			return false;
+		if (dscountedDate == null) {
+			if (other.dscountedDate != null)
+				return false;
+		} else if (!dscountedDate.equals(other.dscountedDate))
+			return false;
+		if (idComputer != other.idComputer)
+			return false;
+		if (introducedDate == null) {
+			if (other.introducedDate != null)
+				return false;
+		} else if (!introducedDate.equals(other.introducedDate))
+			return false;
+		if (nameComputer == null) {
+			if (other.nameComputer != null)
+				return false;
+		} else if (!nameComputer.equals(other.nameComputer))
+			return false;
+		return true;
 	}
 }
