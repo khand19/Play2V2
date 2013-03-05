@@ -4,11 +4,30 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name = "COMPUTER")
 public class Computer {
+	@Id
+	@GeneratedValue
+	@Column(name = "ID")
 	private int idComputer;
+	@Column(name = "NAME")
 	private String nameComputer;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "INTRODUCED")
 	private Date introducedDate;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DISCONTINUED")
 	private Date dscountedDate;
+	@Column(name = "IDCOMPANY")
 	private Company company;
 	
 	public Computer(){
@@ -41,6 +60,8 @@ public class Computer {
 		this.dscountedDate = dscountedDate;
 	}
 	public Company getCompany() {
+		if(company.getIdCompany()==0)
+			return new Company();
 		return company;
 	}
 	public void setCompany(Company company) {
@@ -67,5 +88,9 @@ public class Computer {
 				+ nameComputer + ", introducedDate=" + introducedDate
 				+ ", dscountedDate=" + dscountedDate + ", company=" + company
 				+ "]";
+	}
+	
+	public boolean equals(Object o){
+		return false;
 	}
 }

@@ -2,11 +2,8 @@ package com.excilys.dao;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import com.excilys.bean.Computer;
@@ -26,10 +23,14 @@ public class ComputerDAO implements IComputerDAO {
 
 	@Override
 	public void addComputer(Computer pComputer) {
+		Object[] o = { pComputer.getNameComputer(),pComputer.getIntroducedDate(),
+				pComputer.getDscountedDate(),pComputer.getCompany().getIdCompany() };
+		if(pComputer.getCompany().getIdCompany()==0){
+			o = new Object[] { pComputer.getNameComputer(),pComputer.getIntroducedDate(),
+				pComputer.getDscountedDate(),null };
+		}
 		jdbcTemplate.update(
-				"INSERT INTO COMPUTER (NAME,INTRODUCED,DISCONTINUED,IDCOMPANY) VALUES(?,?,?,?)",
-				new Object[] { pComputer.getNameComputer(),pComputer.getIntroducedDate(),
-						pComputer.getDscountedDate(),pComputer.getCompany().getIdCompany() });
+				"INSERT INTO COMPUTER (NAME,INTRODUCED,DISCONTINUED,IDCOMPANY) VALUES(?,?,?,?)",o);
 	}
 
 	@Override
@@ -52,9 +53,13 @@ public class ComputerDAO implements IComputerDAO {
 
 	@Override
 	public void updateComputer(Computer pComputer) {
-		jdbcTemplate.update(UPDATE,
-				new Object[] { pComputer.getNameComputer(),pComputer.getIntroducedDate(),
-						pComputer.getDscountedDate(),pComputer.getCompany().getIdCompany(),pComputer.getIdComputer() });
+		Object[] o = { pComputer.getNameComputer(),pComputer.getIntroducedDate(),
+				pComputer.getDscountedDate(),pComputer.getCompany().getIdCompany(),pComputer.getIdComputer()};
+		if(pComputer.getCompany().getIdCompany()==0){
+			o = new Object[] { pComputer.getNameComputer(),pComputer.getIntroducedDate(),
+				pComputer.getDscountedDate(),null,pComputer.getIdComputer() };
+		}
+		jdbcTemplate.update(UPDATE,o);
 	}
 
 	@Override
