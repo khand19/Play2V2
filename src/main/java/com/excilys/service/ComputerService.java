@@ -1,5 +1,6 @@
 package com.excilys.service;
 
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,6 +26,7 @@ public class ComputerService implements IComputerService {
 	@Transactional
 	public void addComputer(Computer pComputer) {
 		Log l = new Log();
+		System.out.println(pComputer);
 		cDao.addComputer(pComputer);
 		Date now = Calendar.getInstance().getTime();
 		l.setDateLog(now);
@@ -34,6 +36,7 @@ public class ComputerService implements IComputerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Computer getComputerById(int pIdComputer) {
 		Computer c = cDao.getComputerById(pIdComputer);
 		return c;
@@ -64,7 +67,7 @@ public class ComputerService implements IComputerService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public ListComputer getComputers(String parameter, int i, double s) {
 		ListComputer l = new ListComputer(cDao.getComputers(parameter,i,s),cDao.getNbPages(parameter));
 		return l;
@@ -72,14 +75,14 @@ public class ComputerService implements IComputerService {
 
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public ListComputer getComputers(int i, double s) {
 		ListComputer l = new ListComputer(cDao.getComputers(i,s),cDao.getNbPages(""));
 		return l;
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public int getNbPages(String parameter) {
 		return cDao.getNbPages(parameter);
 	}

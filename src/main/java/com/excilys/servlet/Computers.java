@@ -10,19 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.excilys.bean.Company;
 import com.excilys.bean.Computer;
 import com.excilys.bean.ListComputer;
-import com.excilys.service.CompanyService;
-import com.excilys.service.ComputerService;
+import com.excilys.service.ICompanyService;
+import com.excilys.service.IComputerService;
 
 @Controller
 public class Computers{
 	
 	@Autowired
-	private ComputerService computerService;
+	private IComputerService computerService;
 	@Autowired
-	private CompanyService companyService;
+	private ICompanyService companyService;
 
     @RequestMapping(value="/Computers", method = RequestMethod.GET)
     public String test(@RequestParam(value="p", required=false) String p,
@@ -103,7 +102,7 @@ public class Computers{
 			c.setCompany(companyService.getCompanyByID(Integer
 				.parseInt((String) company)));
 		}else{
-			c.setCompany(new Company(0,""));
+			c.setCompany(null);
 		}
 		
 		boolean erreur = false;

@@ -1,7 +1,20 @@
 package com.excilys.bean;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "company")
 public class Company {
+	@Id
+	@GeneratedValue
+	@Column(name = "IDCOMPANY")
 	private int idCompany;
+	
+	@Column(name = "NAMECOMPANY")
 	private String nameCompany;
 	
 	public Company(int int1, String string) {
