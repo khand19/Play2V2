@@ -5,22 +5,23 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.bean.Computer;
 import com.excilys.bean.ListComputer;
 import com.excilys.bean.Log;
-import com.excilys.dao.ComputerDAO;
-import com.excilys.dao.LogDAO;
+import com.excilys.dao.IComputerDAO;
+import com.excilys.dao.ILogDAO;
 
 @Service
 public class ComputerService implements IComputerService {
 
 	@Autowired
-	private ComputerDAO cDao;
+	private IComputerDAO cDao;
 	@Autowired
-	private LogDAO logDao;
+	private ILogDAO logDao;
 
 	@Override
 	@Transactional
@@ -69,7 +70,8 @@ public class ComputerService implements IComputerService {
 	@Override
 	@Transactional(readOnly = true)
 	public ListComputer getComputers(String parameter, int i, double s) {
-		ListComputer l = new ListComputer(cDao.getComputers(parameter,i,s),cDao.getNbPages(parameter));
+		Page<Computer> pc = cDao.getComputers(parameter,i,s);
+		ListComputer l = new ListComputer(pc.getContent(),(int)pc.getTotalElements());
 		return l;
 	}
 
@@ -77,14 +79,8 @@ public class ComputerService implements IComputerService {
 	@Override
 	@Transactional(readOnly = true)
 	public ListComputer getComputers(int i, double s) {
-		ListComputer l = new ListComputer(cDao.getComputers(i,s),cDao.getNbPages(""));
+		Page<Computer> pc = cDao.getComputers(i,s);
+		ListComputer l = new ListComputer(pc.getContent(),(int)pc.getTotalElements());
 		return l;
 	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public int getNbPages(String parameter) {
-		return cDao.getNbPages(parameter);
-	}
-
 }
