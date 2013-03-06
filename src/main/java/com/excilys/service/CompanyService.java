@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.bean.Company;
-import com.excilys.dao.CompanyDAO;
+import com.excilys.dao.ICompanyDAO;
 
 @Service
 public class CompanyService implements ICompanyService{
 	
 	@Autowired
-	private CompanyDAO companyDao;
+	private ICompanyDAO companyDao;
 	
 	@Override
 	@Transactional(readOnly = true)
