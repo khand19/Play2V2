@@ -11,19 +11,18 @@ import com.excilys.bean.Company;
 import com.excilys.dao.ICompanyDAO;
 
 @Service
+@Transactional(readOnly = true)
 public class CompanyService implements ICompanyService{
 	
 	@Autowired
 	private ICompanyDAO companyDao;
 	
 	@Override
-	@Transactional(readOnly = true)
 	public List<Company> getCompany() {
 		return companyDao.getCompany();
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public Company getCompanyByID(int i) {
 		return companyDao.getCompanyByID(i);
 	}

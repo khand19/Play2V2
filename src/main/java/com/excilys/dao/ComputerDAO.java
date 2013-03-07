@@ -54,7 +54,7 @@ public class ComputerDAO implements IComputerDAO {
 		Pageable page2 = new PageRequest(
 				  i, NB_EL_PAGE, new Sort(o)
 				);
-		return repo.findAllByNameComputerLikeIgnoringCase("%"+parameter+"%",page2);
+		return repo.findAllByNameComputerContainingIgnoringCase(parameter,page2);
 	}
 
 	private Order orderByOrder(double s, String name) {

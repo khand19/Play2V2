@@ -10,19 +10,19 @@ import com.excilys.bean.Log;
 import com.excilys.dao.ILogDAO;
 
 @Service
+@Transactional(readOnly = true)
 public class LogService implements ILogService{
 	
 	@Autowired
 	private ILogDAO logDao;
 		
 	@Override
-	@Transactional(readOnly = true)
 	public List<Log> getLog() {
 		return logDao.getLog();
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void addLog(Log l) {
 		logDao.addLog(l);
 	}

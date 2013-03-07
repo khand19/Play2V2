@@ -16,6 +16,7 @@ import com.excilys.dao.IComputerDAO;
 import com.excilys.dao.ILogDAO;
 
 @Service
+@Transactional(readOnly = true)
 public class ComputerService implements IComputerService {
 
 	@Autowired
@@ -24,7 +25,7 @@ public class ComputerService implements IComputerService {
 	private ILogDAO logDao;
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void addComputer(Computer pComputer) {
 		Log l = new Log();
 		System.out.println(pComputer);
@@ -37,14 +38,13 @@ public class ComputerService implements IComputerService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public Computer getComputerById(int pIdComputer) {
 		Computer c = cDao.getComputerById(pIdComputer);
 		return c;
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void deleteComputer(int pIdComputer) {
 			Log l = new Log();
 			Date now = Calendar.getInstance().getTime();
@@ -56,7 +56,7 @@ public class ComputerService implements IComputerService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void updateComputer(Computer pComputer) {
 			Log l = new Log();
 			Date now = Calendar.getInstance().getTime();
@@ -68,7 +68,6 @@ public class ComputerService implements IComputerService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public ListComputer getComputers(String parameter, int i, double s) {
 		Page<Computer> pc = cDao.getComputers(parameter,i,s);
 		ListComputer l = new ListComputer(pc.getContent(),(int)pc.getTotalElements());
@@ -77,7 +76,6 @@ public class ComputerService implements IComputerService {
 
 
 	@Override
-	@Transactional(readOnly = true)
 	public ListComputer getComputers(int i, double s) {
 		Page<Computer> pc = cDao.getComputers(i,s);
 		ListComputer l = new ListComputer(pc.getContent(),(int)pc.getTotalElements());

@@ -8,7 +8,7 @@ import com.excilys.bean.Computer;
 
 public interface ComputerRepository  extends JpaRepository<Computer,Integer>{
 
-	Page<Computer> findAllByNameComputerLikeIgnoringCase(String parameter,Pageable page2);
+	Page<Computer> findAllByNameComputerContainingIgnoringCase(String parameter,Pageable page2);
 
 //	Page<Computer> findAllOrderByNameComputerAsc(Pageable page2);
 
