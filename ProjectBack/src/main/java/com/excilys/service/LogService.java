@@ -7,22 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.bean.Log;
-import com.excilys.dao.ILogDAO;
+import com.excilys.repository.LogRepository;
 
 @Service
 @Transactional(readOnly = true)
 public class LogService implements ILogService{
-	
 	@Autowired
-	private ILogDAO logDao;
-		
+	private LogRepository repo;	
+	
 	public List<Log> getLog() {
-		return logDao.getLog();
+		return repo.findAll();
 	}
 
-	@Transactional(readOnly = false)
 	public void addLog(Log l) {
-		logDao.addLog(l);
+		repo.save(l);
 	}
-
 }

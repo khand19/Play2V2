@@ -10,10 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 @Entity
 @Table(name = "COMPUTER")
@@ -23,14 +26,17 @@ public class Computer {
 	@Column(name = "ID")
 	private int idComputer;
 	
+    @NotEmpty
 	@Column(name = "NAME")
 	private String nameComputer;
 	
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "INTRODUCED")
 	private Date introducedDate;
 	
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "DISCONTINUED")
 	private Date dscountedDate;
 	
@@ -43,6 +49,23 @@ public class Computer {
 		dscountedDate = null;
 	}
 	
+	public Computer(int idComputer2, String nameComputer2,
+			Date introducedDate2, Date dscountedDate2,Company company2) {
+		idComputer = idComputer2;
+		nameComputer = nameComputer2;
+		introducedDate = introducedDate2;
+		dscountedDate = dscountedDate2;
+		company = company2;
+	}
+	
+	public Computer(String nameComputer2,
+			Date introducedDate2, Date dscountedDate2,Company company2) {
+		nameComputer = nameComputer2;
+		introducedDate = introducedDate2;
+		dscountedDate = dscountedDate2;
+		company = company2;
+	}
+
 	public int getIdComputer() {
 		return idComputer;
 	}

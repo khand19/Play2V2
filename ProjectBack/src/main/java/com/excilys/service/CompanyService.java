@@ -8,20 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.bean.Company;
-import com.excilys.dao.ICompanyDAO;
+import com.excilys.repository.CompanyRepository;
 
 @Service
 @Transactional(readOnly = true)
 public class CompanyService implements ICompanyService{
 	
 	@Autowired
-	private ICompanyDAO companyDao;
+	private CompanyRepository repo;	
 	
 	public List<Company> getCompany() {
-		return companyDao.getCompany();
+		return repo.findAll();
 	}
 
 	public Company getCompanyByID(int i) {
-		return companyDao.getCompanyByID(i);
+		return repo.findOne(i);
 	} 
 }

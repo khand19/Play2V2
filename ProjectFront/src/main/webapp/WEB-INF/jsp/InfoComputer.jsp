@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,88 +11,57 @@
 </head>
 <body>
 	<header class="topbar">
-	<h1 class="fill">
-		<a href="/Play2v2/Computers.html"> Kevin database </a>
-	</h1>
+		<h1 class="fill">
+			<a href="/Play2v2/Computers.html"> Kevin database </a>
+		</h1>
 	</header>
 	<section id="main">
 		<h1>Edit computer</h1>
-		<form action="/Play2v2/SaveComputer.html" method="GET">
+		<form:form action="/Play2v2/SaveComputer.html" method="GET"
+			commandName="computer">
 			<fieldset>
-				<div class="clearfix ">
+				<div
+					class="clearfix <c:if test="${!empty result.getFieldError('nameComputer')}">error</c:if>">
 					<label for="name">Computer name</label>
 					<div class="input">
-						<input type="text" id="name" name="name"
-							value="${computer.nameComputer}"> <span
-							class="help-inline">Required</span>
-						<input type="hidden" id="id" name="id"
+						<form:input path="nameComputer" />
+						<c:if test="${!empty result.getFieldError('nameComputer')}"><div>Required</div></c:if>
+					</div>
+					<input type="hidden" id="id" name="id"
 							value="${computer.idComputer}">
+				</div>
+
+				<div
+					class="clearfix <c:if test="${!empty result.getFieldError('introducedDate')}">error</c:if>">
+					<label for="introduced">Introduced date</label>
+					<div class="input">
+						<form:input path="introducedDate" />
+						<c:if test="${!empty result.getFieldError('introducedDate')}"><div>La date doit être en "yyyy-MM-dd"</div></c:if>
 					</div>
 				</div>
-				
-				
-				<c:choose>
-					<c:when test="${introducedError==1}">
-						<div class="clearfix error ">
-							<label for="introduced">Introduced date</label>
-							<div class="input">
 
-								<input type="text" id="introduced" name="introduced"
-									value="${introducedValue}"> <span
-									class="help-inline">Date (&#x27;yyyy-MM-dd&#x27;)</span>
-							</div>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="clearfix ">
-							<label for="introduced">Introduced date</label>
-							<div class="input">
-
-								<input type="text" id="introduced" name="introduced"
-									value="${computer.introducedDate}"> <span
-									class="help-inline">Date (&#x27;yyyy-MM-dd&#x27;)</span>
-							</div>
-						</div>
-					</c:otherwise>
-				</c:choose>
+				<div
+					class="clearfix <c:if test="${!empty result.getFieldError('dscountedDate')}">error</c:if>">
+					<label for="introduced">Introduced date</label>
+					<div class="input">
+						<form:input path="dscountedDate" />
+						<c:if test="${!empty result.getFieldError('dscountedDate')}"><div>La date doit être en "yyyy-MM-dd"</div></c:if>
+					</div>
+				</div>
 
 
-
-				<c:choose>
-					<c:when test="${discontinuedError==1}">
-						<div class="clearfix error ">
-							<label for="discontinued">Discontinued date</label>
-							<div class="input">
-
-								<input type="text" id="discontinued" name="discontinued"
-									value="${discontinuedValue}"> <span class="help-inline">Date
-									(&#x27;yyyy-MM-dd&#x27;)</span>
-							</div>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="clearfix ">
-							<label for="discontinued">Discontinued date</label>
-							<div class="input">
-
-								<input type="text" id="discontinued" name="discontinued"
-									value="${computer.dscountedDate}"> <span
-									class="help-inline">Date (&#x27;yyyy-MM-dd&#x27;)</span>
-							</div>
-						</div>
-					</c:otherwise>
-				</c:choose>
 				<div class="clearfix ">
 					<label for="company">Company</label>
 					<div class="input">
 
 						<select id="company" name="company">
-							<c:if test="${computer.company.idCompany==null or computer.company.idCompany==0}">
+							<c:if
+								test="${computer.company==null or computer.company==0}">
 								<option class="blank" value="">-- Choose a company --</option>
-							</c:if>				            
+							</c:if>
 							<c:forEach var="comp" items="${company}">
 								<c:choose>
-									<c:when test="${comp.idCompany==computer.company.idCompany}">
+									<c:when test="${comp.idCompany==computer.company}">
 										<option value="${comp.idCompany}" selected>${comp.nameCompany}</option>
 									</c:when>
 									<c:otherwise>
@@ -99,7 +69,6 @@
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
-
 						</select> <span class="help-inline"></span>
 					</div>
 				</div>
@@ -114,12 +83,13 @@
 			</div>
 
 
-		</form>
+		</form:form>
 
 
 
 
-		<form action="/Play2v2/Delete.html?id=${computer.idComputer}" method="POST" class="topRight">
+		<form action="/Play2v2/Delete.html?id=${computer.idComputer}"
+			method="POST" class="topRight">
 			<input type="submit" value="Delete this computer" class="btn danger">
 		</form>
 
