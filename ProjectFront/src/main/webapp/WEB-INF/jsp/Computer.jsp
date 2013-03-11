@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="pag" tagdir="/WEB-INF/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -62,8 +63,8 @@
 		</form>
 
 
-		<a class="btn success" id="add" href="/Play2v2/ComputerId.html">Add a
-			new computer</a>
+		<a class="btn success" id="add" href="/Play2v2/ComputerId.html">Add
+			a new computer</a>
 
 	</div>
 
@@ -114,55 +115,8 @@
 
 		</tbody>
 	</table>
-	<div id="pagination" class="pagination">
-		<ul>
+    <pag:pagination numpage="${numpage}" f="${param.f}" s="${param.s}" nbel="${nbel}" />
 
-			<c:choose>
-				<c:when test="${numpage<1}">
-					<li class="prev disabled"><a>&larr; Previous</a></li>
-				</c:when>
-				<c:otherwise>
-					<li class="prev"><a
-						href="/Play2v2/Computers.html?p=${numpage-1}
-						<c:if test="${param.f != null}">
-							&f=${param.f }
-						</c:if>
-						<c:if test="${param.s != null}">&s=${param.s }</c:if>
-					">&larr;
-							Previous</a></li>
-				</c:otherwise>
-			</c:choose>
-
-			<c:choose>
-				<c:when test="${numpage*10+10>nbel}">
-					<li class="current"><a>Displaying ${numpage*10} to ${nbel}
-							of ${nbel}</a></li>
-				</c:when>
-				<c:otherwise>
-					<li class="current"><a>Displaying ${numpage*10} to
-							${numpage*10+10} of ${nbel}</a></li>
-				</c:otherwise>
-			</c:choose>
-
-
-			<c:choose>
-				<c:when test="${(numpage+1)*10>nbel}">
-					<li class="prev disabled"><a>Next &rarr;</a></li>
-				</c:when>
-				<c:otherwise>
-					<li class="next"><a
-						href="/Play2v2/Computers.html?p=${numpage+1}
-						<c:if test="${param.f != null}">&f=${param.f }</c:if>
-						<c:if test="${param.s != null}">&s=${param.s }</c:if>						
-						">
-							Next &rarr;</a></li>
-				</c:otherwise>
-			</c:choose>
-
-
-
-		</ul>
-	</div>
 
 	</section>
 

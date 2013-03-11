@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.excilys.bean.Company;
-import com.excilys.bean.Computer;
 import com.excilys.bean.ListComputer;
 import com.excilys.form.ComputerForm;
 import com.excilys.service.ICompanyService;
@@ -44,12 +43,12 @@ public class Computers {
 		}
 
 		double variableDouble = 0;
-		if (s != null) {
+		if (s != null && s != "") {
 			variableDouble = Double.parseDouble((String) s);
 		}
 
 		ListComputer liste = null;
-		if (f != null) {
+		if (f != null && f != "") {
 			String computerRecherche = f;
 			liste = computerService.getComputers(computerRecherche,
 					numPage * 10, variableDouble);
@@ -123,6 +122,5 @@ public class Computers {
 			model.addAttribute("name", computer.getNameComputer());
 			return "redirect:Computers.html";
 		}
-
 	}
 }
