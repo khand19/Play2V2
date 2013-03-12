@@ -1,8 +1,5 @@
 package com.excilys.bean;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -30,15 +29,17 @@ public class Computer {
 	@Column(name = "NAME")
 	private String nameComputer;
 	
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "INTRODUCED")
-	private Date introducedDate;
+	private LocalDate introducedDate;
 	
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "DISCONTINUED")
-	private Date dscountedDate;
+	private LocalDate dscountedDate;
 	
 	@ManyToOne
     @JoinColumn(name="IDCOMPANY")
@@ -50,7 +51,7 @@ public class Computer {
 	}
 	
 	public Computer(int idComputer2, String nameComputer2,
-			Date introducedDate2, Date dscountedDate2,Company company2) {
+			LocalDate introducedDate2, LocalDate dscountedDate2,Company company2) {
 		idComputer = idComputer2;
 		nameComputer = nameComputer2;
 		introducedDate = introducedDate2;
@@ -59,7 +60,7 @@ public class Computer {
 	}
 	
 	public Computer(String nameComputer2,
-			Date introducedDate2, Date dscountedDate2,Company company2) {
+			LocalDate introducedDate2, LocalDate dscountedDate2,Company company2) {
 		nameComputer = nameComputer2;
 		introducedDate = introducedDate2;
 		dscountedDate = dscountedDate2;
@@ -78,16 +79,16 @@ public class Computer {
 	public void setNameComputer(String nameComputer) {
 		this.nameComputer = nameComputer;
 	}
-	public Date getIntroducedDate() {
+	public LocalDate getIntroducedDate() {
 		return introducedDate;
 	}
-	public void setIntroducedDate(Date introducedDate) {
+	public void setIntroducedDate(LocalDate introducedDate) {
 		this.introducedDate = introducedDate;
 	}
-	public Date getDscountedDate() {
+	public LocalDate getDscountedDate() {
 		return dscountedDate;
 	}
-	public void setDscountedDate(Date dscountedDate) {
+	public void setDscountedDate(LocalDate dscountedDate) {
 		this.dscountedDate = dscountedDate;
 	}
 	public Company getCompany() {
@@ -109,20 +110,20 @@ public class Computer {
 		this.company = company;
 		System.out.println(this.toString());
 	}
-	public String getIntroduceDateWithFormat(){
-		DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-		if(introducedDate!=null)
-			return (String)formatter.format(introducedDate);
-		else
-			return "-";
-	}
-	public String getDiscountedsDateWithFormat(){
-		DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-		if(dscountedDate!=null)
-			return (String)formatter.format(dscountedDate);
-		else
-			return "-";
-	}
+//	public String getIntroduceDateWithFormat(){
+//		DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+//		if(introducedDate!=null)
+//			return (String)formatter.format(introducedDate);
+//		else
+//			return "-";
+//	}
+//	public String getDiscountedsDateWithFormat(){
+//		DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+//		if(dscountedDate!=null)
+//			return (String)formatter.format(dscountedDate);
+//		else
+//			return "-";
+//	}
 
 	@Override
 	public String toString() {

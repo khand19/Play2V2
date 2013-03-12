@@ -1,14 +1,15 @@
 package com.excilys.form;
 
-import java.util.Date;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
 import com.excilys.bean.Company;
 import com.excilys.bean.Computer;
@@ -16,18 +17,21 @@ import com.excilys.bean.Computer;
 public class ComputerForm {
 	@Id
 	@GeneratedValue
+	@NotNull
 	private int idComputer;
 
 	@NotEmpty
 	private String nameComputer;
-
+	
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date introducedDate;
+	private LocalDate introducedDate;
 
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dscountedDate;
+	private LocalDate dscountedDate;
 	
 	private Integer company;
 
@@ -36,7 +40,7 @@ public class ComputerForm {
 	}
 	
 	public ComputerForm(int idComputer, String nameComputer,
-			Date introducedDate, Date dscountedDate, Integer company) {
+			LocalDate introducedDate, LocalDate dscountedDate, Integer company) {
 		super();
 		this.idComputer = idComputer;
 		this.nameComputer = nameComputer;
@@ -70,19 +74,19 @@ public class ComputerForm {
 		this.nameComputer = nameComputer;
 	}
 
-	public Date getIntroducedDate() {
+	public LocalDate getIntroducedDate() {
 		return introducedDate;
 	}
 
-	public void setIntroducedDate(Date introducedDate) {
+	public void setIntroducedDate(LocalDate introducedDate) {
 		this.introducedDate = introducedDate;
 	}
 
-	public Date getDscountedDate() {
+	public LocalDate getDscountedDate() {
 		return dscountedDate;
 	}
 
-	public void setDscountedDate(Date dscountedDate) {
+	public void setDscountedDate(LocalDate dscountedDate) {
 		this.dscountedDate = dscountedDate;
 	}
 

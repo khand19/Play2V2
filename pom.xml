@@ -22,7 +22,10 @@
 		<hibernate.version>4.1.9.Final</hibernate.version>
 		<springjpa.version>1.3.0.RELEASE</springjpa.version>
 		<springsecurity.version>3.1.3.RELEASE</springsecurity.version>
-        <hibernate.validator.version>4.2.0.Final</hibernate.validator.version>
+		<hibernate.validator.version>4.2.0.Final</hibernate.validator.version>
+		<joda.time>2.1</joda.time>
+		<joda.time.jsptags>1.1.1</joda.time.jsptags>
+		<jadira>3.1.0.CR1</jadira>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -150,31 +153,48 @@
 				<groupId>org.springmodules</groupId>
 				<artifactId>spring-modules-validation</artifactId>
 				<version>0.8</version>
-				  <exclusions>
-                <exclusion>
-                    <artifactId>antlr</artifactId>
-                    <groupId>antlr</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-digester</artifactId>
-                    <groupId>commons-digester</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-beanutils</artifactId>
-                    <groupId>commons-beanutils</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
+				<exclusions>
+					<exclusion>
+						<artifactId>antlr</artifactId>
+						<groupId>antlr</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>commons-digester</artifactId>
+						<groupId>commons-digester</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>commons-beanutils</artifactId>
+						<groupId>commons-beanutils</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>spring</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate.validator.version}</version>
-            </dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate.validator.version}</version>
+			</dependency>
 
+
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time-jsptags</artifactId>
+				<version>${joda.time.jsptags}</version>
+			</dependency>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${joda.time}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jadira.usertype</groupId>
+				<artifactId>usertype.core</artifactId>
+				<version>${jadira}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<modules>

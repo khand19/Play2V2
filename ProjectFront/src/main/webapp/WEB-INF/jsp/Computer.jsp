@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="pag" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -106,8 +108,8 @@
 			<c:forEach var="comp" items="${computer}">
 				<tr>
 					<td><a href="/Play2v2/ComputerId.html?id=${comp.idComputer}">${comp.nameComputer}</a></td>
-					<td><em>${comp.introduceDateWithFormat}</em></td>
-					<td><em>${comp.discountedsDateWithFormat}</em></td>
+					<td><em><joda:format value="${comp.introducedDate}" style="M-" /></em></td>
+					<td><em><joda:format value="${comp.dscountedDate}" style="M-" /></em></td>
 					<td>${comp.company.nameCompany}</td>
 				</tr>
 			</c:forEach>
