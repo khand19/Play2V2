@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="pag" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags"%>
-
+<%@ taglib prefix="pag" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="lbl"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -24,18 +23,18 @@
 			<h1>One computer found</h1>
 		</c:when>
 		<c:when test="${nbel==0}">
-			<h1>No computer found</h1>
+			<h1><lbl:message code='page.dashboard.title'/></h1>
 		</c:when>
 		<c:otherwise>
-			<h1>${nbel} computers found</h1>
-		</c:otherwise>
+			<h1><lbl:message code='page.dashboard.title' arguments="${nbel}" /></h1>
+		</c:otherwise>		
 	</c:choose> <c:choose>
-		<c:when test="${delete==true}">
+		<c:when test="${message==1}">
 			<div class="alert-message warning">
 				<strong>Done!</strong> Computer has been deleted
 			</div>
 		</c:when>
-		<c:when test="${update==true}">
+		<c:when test="${message==2}">
 			<div class="alert-message warning">
 				<strong>Done!</strong> Computer <strong>${name}</strong> has been
 				updated
@@ -43,20 +42,19 @@
 		</c:when>
 		<c:otherwise></c:otherwise>
 	</c:choose>
-
+<div style="position:absolute;top:65px;right:28px;"> Ln: <a href="?ln=fr_FR">FR</a> / <a href="?ln=en_EN">EN</a></div>
 	<div id="actions">
 		<form action="/Play2v2/Computers.html" method="GET">
 			<input type="search" id="searchbox" name="f"
 				value="<c:if test="${param.f != null}">${param.f }</c:if>"
-				placeholder="Filter by computer name...">
+				placeholder="<lbl:message code='form.search'/>">
 			<c:if test="${param.s != null}">
 				<input type="hidden" id="s" name="s" value="${param.s }">
 			</c:if>
-			<input type="submit" id="searchsubmit" value="Filter by name"
+			<input type="submit" id="searchsubmit" value="<lbl:message code='form.submit.filterByName'/>"
 				class="btn primary">
 		</form>
-		<a class="btn success" id="add" href="/Play2v2/ComputerId.html">Add
-			a new computer</a>
+		<a class="btn success" id="add" href="/Play2v2/ComputerId.html"><lbl:message code='page.dashboard.addNewComputer'/></a>
 	</div>
 
 	<table class="computers zebra-striped">

@@ -4,7 +4,7 @@
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	
+
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd 
         http://www.springframework.org/schema/tx
@@ -27,6 +27,25 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-		<mvc:annotation-driven/>
-<!-- 	<mvc:annotation-drivenzefazef/> -->
+	<mvc:annotation-driven />
+
+	<!-- Beans à déclarer pour la gestion du multilingue -->
+	<!-- To parse the language files. Ici message_XXXXXXXX.properties -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="message" />
+	</bean>
+	<!-- To set the default language -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="fr_FR" />
+	</bean>
+
+	<!-- To change the language -->
+	<mvc:interceptors>
+		<bean id="localeChangeInterceptor"
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="ln" />
+		</bean>
+	</mvc:interceptors>
 </beans>
