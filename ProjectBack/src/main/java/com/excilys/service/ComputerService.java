@@ -18,7 +18,7 @@ import com.excilys.bean.Computer;
 import com.excilys.bean.ListComputer;
 import com.excilys.bean.Log;
 import com.excilys.repository.ComputerRepository;
-
+ 
 @Service
 @Transactional(readOnly = true)
 public class ComputerService implements IComputerService {
@@ -46,6 +46,10 @@ public class ComputerService implements IComputerService {
 	public Computer getComputerById(int pIdComputer) {
 		Computer c = repo.findOne(pIdComputer);
 		return c;
+	}
+	
+	public boolean existComputer(int pIdComputer){
+		return repo.exists(pIdComputer);
 	}
 
 	@Transactional(readOnly = false)

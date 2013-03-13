@@ -15,4 +15,6 @@ public interface IComputerService {
 	public ListComputer getComputers(String parameter,int i,double s);
 	
 	public ListComputer getComputers(int i,double s);
+	
+	public boolean existComputer(int pIdComputer);
 }

@@ -17,7 +17,7 @@
 	</header>
 	<section id="main">
 		<h1>Edit computer</h1>
-		<form:form action="/Play2v2/SaveComputer.html" method="GET"
+		<form:form action="/Play2v2/SaveComputer.html" method="POST"
 			commandName="computer">
 			<fieldset>
 				<div
@@ -25,10 +25,12 @@
 					<label for="name">Computer name</label>
 					<div class="input">
 						<form:input path="nameComputer" />
-						<c:if test="${!empty result.getFieldError('nameComputer')}"><div>Required</div></c:if>
+						<c:if test="${!empty result.getFieldError('nameComputer')}">
+							<div>Required</div>
+						</c:if>
 					</div>
 					<input type="hidden" id="id" name="id"
-							value="${computer.idComputer}">
+						value="${computer.idComputer}">
 				</div>
 
 				<div
@@ -36,7 +38,9 @@
 					<label for="introduced">Introduced date</label>
 					<div class="input">
 						<form:input path="introducedDate" />
-						<c:if test="${!empty result.getFieldError('introducedDate')}"><div>La date doit être en "yyyy-MM-dd"</div></c:if>
+						<c:if test="${!empty result.getFieldError('introducedDate')}">
+							<div>La date doit être en "yyyy-MM-dd"</div>
+						</c:if>
 					</div>
 				</div>
 
@@ -45,7 +49,9 @@
 					<label for="introduced">Introduced date</label>
 					<div class="input">
 						<form:input path="dscountedDate" />
-						<c:if test="${!empty result.getFieldError('dscountedDate')}"><div>La date doit être en "yyyy-MM-dd"</div></c:if>
+						<c:if test="${!empty result.getFieldError('dscountedDate')}">
+							<div>La date doit être en "yyyy-MM-dd"</div>
+						</c:if>
 					</div>
 				</div>
 
@@ -55,8 +61,7 @@
 					<div class="input">
 
 						<select id="company" name="company">
-							<c:if
-								test="${computer.company==null or computer.company==0}">
+							<c:if test="${computer.company==null or computer.company==0}">
 								<option class="blank" value="">-- Choose a company --</option>
 							</c:if>
 							<c:forEach var="comp" items="${company}">
@@ -88,7 +93,8 @@
 
 
 
-		<form action="/Play2v2/Delete.html?id=${computer.idComputer}"
+		<%-- 		<form action="/Play2v2/Delete.html?id=${computer.idComputer}" --%>
+		<form action="/Play2v2/delete/${computer.idComputer}.html"
 			method="POST" class="topRight">
 			<input type="submit" value="Delete this computer" class="btn danger">
 		</form>

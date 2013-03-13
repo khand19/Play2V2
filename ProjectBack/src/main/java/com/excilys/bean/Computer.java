@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
+ 
 @Entity
 @Table(name = "COMPUTER")
 public class Computer {
@@ -110,20 +110,6 @@ public class Computer {
 		this.company = company;
 		System.out.println(this.toString());
 	}
-//	public String getIntroduceDateWithFormat(){
-//		DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-//		if(introducedDate!=null)
-//			return (String)formatter.format(introducedDate);
-//		else
-//			return "-";
-//	}
-//	public String getDiscountedsDateWithFormat(){
-//		DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-//		if(dscountedDate!=null)
-//			return (String)formatter.format(dscountedDate);
-//		else
-//			return "-";
-//	}
 
 	@Override
 	public String toString() {

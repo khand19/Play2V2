@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.bean.Log;
 import com.excilys.repository.LogRepository;
-
+ 
 @Service
 @Transactional(readOnly = true)
 public class LogService implements ILogService{

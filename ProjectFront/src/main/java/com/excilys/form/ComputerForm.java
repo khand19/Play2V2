@@ -9,7 +9,6 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
 import com.excilys.bean.Company;
 import com.excilys.bean.Computer;
@@ -17,7 +16,6 @@ import com.excilys.bean.Computer;
 public class ComputerForm {
 	@Id
 	@GeneratedValue
-	@NotNull
 	private int idComputer;
 
 	@NotEmpty
