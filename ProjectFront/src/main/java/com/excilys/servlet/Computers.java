@@ -36,7 +36,8 @@ public class Computers {
 	@RequestMapping(value = "/Computers", method = RequestMethod.GET)
 	public String test(@RequestParam(value = "p", required = false) String p,
 			@RequestParam(value = "s", required = false) String s,
-			@RequestParam(value = "f", required = false) String f, Model model) {
+			@RequestParam(value = "f", required = false) String f,
+			@RequestParam(value = "searchC", required = false) String searchC,Model model) {
 
 		logger.info("Entering Service.getComputer");
 		int numPage = 0;
@@ -53,7 +54,7 @@ public class Computers {
 		ListComputer liste = null;
 		if (f != null && f != "") {
 			String computerRecherche = f;
-			liste = computerService.getComputers(computerRecherche,
+			liste = computerService.getComputers(computerRecherche,searchC,
 					numPage * 10, variableDouble);
 		} else {
 			liste = computerService.getComputers(numPage * 10, variableDouble);

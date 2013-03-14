@@ -11,12 +11,16 @@
 	<build>
 		<finalName>Play2v2</finalName>
 	</build>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.version>3.2.1.RELEASE</org.springframework.version>
 		<org.hibernate.version>4.1.9.Final</org.hibernate.version>
 		<org.slf4j.version>1.6.4</org.slf4j.version>
+		<query.dsl>2.9.0</query.dsl>
 	</properties>
+
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -139,6 +143,24 @@
 				<groupId>javax.persistence</groupId>
 				<artifactId>persistence-api</artifactId>
 				<version>1.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-apt</artifactId>
+				<version>${query.dsl}</version>
+			</dependency>  
+
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-jpa</artifactId>
+				<version>${query.dsl}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-core</artifactId>
+				<version>${query.dsl}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

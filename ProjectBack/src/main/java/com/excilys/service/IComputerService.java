@@ -12,7 +12,7 @@ public interface IComputerService {
 	
 	public void updateComputer(Computer pComputer);
 	
-	public ListComputer getComputers(String parameter,int i,double s);
+	public ListComputer getComputers(String parameter,String searchC, int i,double s);
 	
 	public ListComputer getComputers(int i,double s);
 	

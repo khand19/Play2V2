@@ -51,6 +51,10 @@
 			<c:if test="${param.s != null}">
 				<input type="hidden" id="s" name="s" value="${param.s }">
 			</c:if>
+			<input type="search" id="searchC" name="searchC"
+				value="<c:if test="${param.searchC != null}">${param.searchC }</c:if>"
+				placeholder="<lbl:message code='form.search.company'/>">
+			
 			<input type="submit" id="searchsubmit" value="<lbl:message code='form.submit.filterByName'/>"
 				class="btn primary">
 		</form>
