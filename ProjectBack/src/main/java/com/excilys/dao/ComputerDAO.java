@@ -54,6 +54,7 @@ public class ComputerDAO implements IComputerDAO {
 		return generateGetComputer(parameter, searchC, page2);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private ListComputer generateGetComputer(String parameter, String searchC,
 			Pageable page2) {
 		QComputer comp = QComputer.computer;

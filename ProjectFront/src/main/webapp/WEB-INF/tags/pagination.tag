@@ -10,7 +10,7 @@
 		<ul>
 			<c:choose>
 				<c:when test="${numpage<1}">
-					<li class="prev disabled"><a>&larr; Previous</a></li>
+<!-- 					<li class="prev disabled"><a>&larr; Previous</a></li> -->
 				</c:when>
 				<c:otherwise>
 					<li class="prev"><a
@@ -29,11 +29,11 @@
 
 			<c:choose>
 				<c:when test="${numpage*10+10>nbel}">
-					<li class="current"><a>Displaying ${numpage*10} to ${nbel}
+					<li class="current"><a>Displaying ${numpage*10+1} to ${nbel}
 							of ${nbel}</a></li>
 				</c:when>
 				<c:otherwise>
-					<li class="current"><a>Displaying ${numpage*10} to
+					<li class="current"><a>Displaying ${numpage*10+1} to
 							${numpage*10+10} of ${nbel}</a></li>
 				</c:otherwise>
 			</c:choose>

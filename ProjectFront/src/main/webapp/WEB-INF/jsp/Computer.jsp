@@ -77,34 +77,10 @@
 	<table class="computers zebra-striped">
 		<thead>
 			<tr>
-				<th
-					class="col2 header <c:if test="${param.s==1 or param.s==-1}"> headerSort<c:choose><c:when test="${param.s==-1}">Down</c:when><c:otherwise>Up</c:otherwise></c:choose></c:if>"><a
-					href="/Play2v2/Computers.html?s=<c:if test="${param.s > 0}">-</c:if>1
-				<c:if test="${param.f != null}">&f=${param.f }</c:if>
-				<c:if test="${param.searchC != null}">${param.searchC }</c:if>				
-				">Computer
-						name</a></th>
-				<th
-					class="col3 header <c:if test="${param.s==2 or param.s==-2}"> headerSort<c:choose><c:when test="${param.s==-2}">Down</c:when><c:otherwise>Up</c:otherwise></c:choose></c:if>"><a
-					href="/Play2v2/Computers.html?s=<c:if test="${param.s > 0}">-</c:if>2
-				<c:if test="${param.f != null}">&f=${param.f }</c:if>
-				<c:if test="${param.searchC != null}">${param.searchC }</c:if>				
-				">Introduced</a>
-				</th>
-				<th
-					class="col4 header <c:if test="${param.s==3 or param.s==-3}"> headerSort<c:choose><c:when test="${param.s==-3}">Down</c:when><c:otherwise>Up</c:otherwise></c:choose></c:if>"><a
-					href="/Play2v2/Computers.html?s=<c:if test="${param.s > 0}">-</c:if>3
-				<c:if test="${param.f != null}">&f=${param.f }</c:if>
-				<c:if test="${param.searchC != null}">${param.searchC }</c:if>				
-				">Discontinued</a>
-				</th>
-				<th
-					class="col5 header <c:if test="${param.s==4 or param.s==-4}"> headerSort<c:choose><c:when test="${param.s==-4}">Down</c:when><c:otherwise>Up</c:otherwise></c:choose></c:if>"><a
-					href="/Play2v2/Computers.html?s=<c:if test="${param.s > 0}">-</c:if>4
-					<c:if test="${param.f != null}">&f=${param.f }</c:if>
-					<c:if test="${param.searchC != null}">${param.searchC }</c:if>				
-					">Company</a></th>
-			</tr>
+				<pag:collone f="${param.f}" s="${param.s}" searchC="${param.searchC}" name="Computer name" col="1"/>
+				<pag:collone f="${param.f}" s="${param.s}" searchC="${param.searchC}" name="Introduced" col="2"/>
+				<pag:collone f="${param.f}" s="${param.s}" searchC="${param.searchC}" name="Discontinued" col="3"/>
+				<pag:collone f="${param.f}" s="${param.s}" searchC="${param.searchC}" name="Company" col="4"/>
 		</thead>
 		<tbody>
 
