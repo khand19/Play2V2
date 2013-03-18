@@ -2,6 +2,8 @@ package com.excilys.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.excilys.bean.Computer;
 import com.excilys.bean.ListComputer;
 
@@ -17,9 +19,9 @@ public interface IComputerDAO {
 	
 	public void updateComputer(Computer pComputer);
 	
-	public ListComputer getComputers(String parameter,String searchC, int i,double s);
-	
-	public ListComputer getComputers(int i,double s);
+	public ListComputer getComputers(String parameter,String searchC, Pageable page2);
+
+	public ListComputer getComputers(Pageable page2);
 	
 	public boolean existComputer(int pIdComputer);
 }

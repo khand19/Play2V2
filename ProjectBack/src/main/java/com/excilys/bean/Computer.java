@@ -1,6 +1,5 @@
 package com.excilys.bean;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,6 +42,7 @@ public class Computer {
 	
 	@ManyToOne
     @JoinColumn(name="IDCOMPANY")
+//	@JoinTable(name="COMPUTER")
 	private Company company;
 	
 	public Computer(){

@@ -7,23 +7,23 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Repository;
 
 import com.excilys.bean.Computer;
 import com.excilys.bean.ListComputer;
+import com.excilys.bean.QCompany;
 import com.excilys.bean.QComputer;
 import com.excilys.repository.ComputerRepository;
 import com.mysema.query.BooleanBuilder;
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.OrderSpecifier;
+import com.mysema.query.types.path.PathBuilder;
 
 @Repository
 public class ComputerDAO implements IComputerDAO {
-	private final int NB_EL_PAGE = 10;
-
 	@PersistenceContext
 	private EntityManager ent;
 
@@ -50,78 +50,65 @@ public class ComputerDAO implements IComputerDAO {
 		repo.save(pComputer);
 	}
 
-	public ListComputer getComputers(String parameter, String searchC, int i,
-			double s) {
-		String name = orderByName(s);
-		Order o = orderByOrder(s, name);
-		i /= 10;
-		Pageable page2 = new PageRequest(i, NB_EL_PAGE, new Sort(o));
-
+	public ListComputer getComputers(String parameter,String searchC, Pageable page2){
+		QComputer comp = QComputer.computer;
+		QCompany companyQ = QCompany.company;
+		
 		BooleanBuilder bb = new BooleanBuilder();
-		if (searchC != null) {
-			// QComputer.computer.company
+
+		if (searchC != null && searchC!="") {
 			bb.and(QComputer.computer.company.nameCompany
 					.containsIgnoreCase(searchC));
 		}
-		if (parameter != null) {
+		if (parameter != null && parameter!="") {
 			bb.and(QComputer.computer.nameComputer
 					.containsIgnoreCase(parameter));
 		}
-		Page<Computer> pc2 = repo.findAll(bb, page2);
+		
+		JPAQuery query = new JPAQuery(ent).from(comp).leftJoin(comp.company,companyQ).fetch().where(bb);
+		
+		//nombre d'element
+		int i = (int) query.count();
+
+		//permet de passer du sort pageable au sort de querydsl
+		for (Sort.Order o : page2.getSort()) {
+            query.orderBy(new OrderSpecifier(o.isAscending() ? com.mysema.query.types.Order.ASC
+                    : com.mysema.query.types.Order.DESC, new PathBuilder(Computer.class, o.getProperty())));
+        }
+		
+		//creation de la liste
+		List<Computer> j = query.offset(page2.getOffset()).limit(10).list(comp);
+		
+		
+		Page<Computer> pc2 = new PageImpl<Computer>(j,page2, i);
 		ListComputer l = new ListComputer(pc2.getContent(),
 				(int) pc2.getTotalElements());
-
 		return l;
 	}
 
-	private Order orderByOrder(double s, String name) {
-		// String name;
-		Order o = new Order(Direction.ASC, name);
-		if (s < 0) {
-			o = new Order(Direction.DESC, name);
-		}
-		return o;
-	}
 
-	private String orderByName(double s) {
-		String name = "";
-		try {
-			int sprime = (int) s;
-			if (s < 0)
-				sprime *= -1;
-			switch (sprime) {
-			case 1:
-				name = "nameComputer";
-				break;
-			case 2:
-				name = "introducedDate";
-				break;
-			case 3:
-				name = "dscountedDate";
-				break;
-			case 4:
-				name = "company.nameCompany";
-				break;
-			default:
-				name = "nameComputer";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return name;
-	}
-
-	public ListComputer getComputers(int i, double s) {
-		String name = orderByName(s);
-		Order o = orderByOrder(s, name);
-		i /= 10;
-		Pageable page2 = new PageRequest(i, NB_EL_PAGE, new Sort(o));
-		Page<Computer> pc = repo.findAll(page2);
-		ListComputer l = new ListComputer(pc.getContent(),
-				(int) pc.getTotalElements());
+	public ListComputer getComputers(Pageable page2){
+		QComputer comp = QComputer.computer;
+		QCompany companyQ = QCompany.company;
+		JPAQuery query = new JPAQuery(ent).from(comp).leftJoin(comp.company,companyQ).fetch();
+		
+		//nombre d'element
+		int i = (int) query.count();
+		
+		//permet de passer du sort pageable au sort de querydsl
+		for (Sort.Order o : page2.getSort()) {
+            query.orderBy(new OrderSpecifier(o.isAscending() ? com.mysema.query.types.Order.ASC
+                    : com.mysema.query.types.Order.DESC, new PathBuilder(Computer.class, o.getProperty())));
+        }
+		
+		//creation de la liste
+		List<Computer> j = query.offset(page2.getOffset()).limit(10).list(comp);
+		
+		
+		Page<Computer> pc2 = new PageImpl<Computer>(j,page2, i);
+		ListComputer l = new ListComputer(pc2.getContent(),
+				(int) pc2.getTotalElements());
 		return l;
-		// return repo.findAll(page2);
-		// return repo.findAllOrderByNameComputerAsc(page2);
 	}
 
 	public boolean existComputer(int pIdComputer) {

@@ -1,0 +1,86 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="kevin" password="kevin" authorities="ROLE_DEFAULT" />
+				<user name="bob" password="bob" authorities="ROLE_BASIC" />				
+				<user name="admin" password="admin" authorities="ROLE_DEFAULT,ROLE_ADMIN" />
+				<user name="martin" password="password" authorities="ROLE_DEFAULT" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+
+	<http pattern="/login.jsp" security="none" />
+	<http>
+		<intercept-url pattern="/Computers*" access="ROLE_DEFAULT" />
+		<intercept-url pattern="/ComputerId*" access="ROLE_ADMIN" />	 
+		
+		<form-login login-page="/login.jsp" default-target-url="/Computers.html"
+			always-use-default-target='true' />
+		<logout logout-success-url="/login.jsp"/>
+	</http>
+</beans:beans>
+<!-- 	<authentication-manager> -->
+<!-- 		<authentication-provider> -->
+<!-- 			<user-service> -->
+<!-- 				<user name="kevin" password="kevin" authorities="ROLE_DEFAULT,ROLE_ADMIN" /> -->
+<!-- 				<user name="adminn" password="adminn" authorities="ROLE_DEFAULT,ROLE_ADMIN" /> -->
+<!-- 				<user name="martin" password="password" authorities="ROLE_DEFAULT" /> -->
+<!-- 				<user name="bob" password="bob" authorities="ROLE_BASIC" /> -->
+<!-- 				<user name="admin" password="admin" authorities="ROLE_LIBRARIAN,ROLE_BASIC" /> -->
+<!-- 			</user-service> -->
+<!-- 		</authentication-provider> -->
+<!-- 	</authentication-manager> -->
+
+<!-- 	<http pattern="/login.jsp" security="none" /> -->
+<!-- 	<http> -->
+<!-- 		<intercept-url pattern="/**" access="ROLE_DEFAULT,ROLE_BASIC" /> -->
+<!--  		<intercept-url pattern="/books*" access="ROLE_LIBRARIAN" />	 --> 
+		
+<!-- 		<form-login login-page="/login.jsp" default-target-url="/book.html" -->
+<!-- 			always-use-default-target='true' /> -->
+<!-- 		<logout logout-success-url="/login.jsp"/> -->
+<!-- 	</http> -->
+	
+<!-- 	<bean:bean id="target" class="mvc.controller"> -->
+<!-- 		<intercept-methods> -->
+<!-- 			<protect method="/book.html" access="ROLE_BASIC"/> -->
+<!-- 		</intercept-methods> -->
+<!-- 	</bean:bean> -->
+	
+<!-- 	<global-method-security secured-annotations="enabled"/> -->
+
+
+
+
+<!-- <beans:beans xmlns="http://www.springframework.org/schema/security" -->
+<!-- 	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!-- 	xsi:schemaLocation="http://www.springframework.org/schema/beans -->
+<!--           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd -->
+<!--           http://www.springframework.org/schema/security -->
+<!--           http://www.springframework.org/schema/security/spring-security-3.1.xsd"> -->
+
+<!-- 	<authentication-manager> -->
+<!-- 		<authentication-provider> -->
+<!-- 			<user-service> -->
+<!-- 				<user name="kevin" password="kevin" authorities="ROLE_DEFAULT,ROLE_ADMIN" /> -->
+<!-- 				<user name="admin" password="admin" authorities="ROLE_DEFAULT,ROLE_ADMIN" /> -->
+<!-- 				<user name="martin" password="password" authorities="ROLE_DEFAULT" /> -->
+<!-- 			</user-service> -->
+<!-- 		</authentication-provider> -->
+<!-- 	</authentication-manager> -->
+
+<!-- 	<http pattern="/login.jsp" security="none" /> -->
+<!-- 	<http> -->
+<!-- 		<intercept-url pattern="/**" access="ROLE_DEFAULT" /> -->
+<!-- 		<form-login login-page="/login.jsp" default-target-url="/book.html" -->
+<!-- 			always-use-default-target='true' /> -->
+<!-- 		<logout logout-success-url="/login.jsp"/> -->
+<!-- 	</http> -->
+<!-- </beans:beans> -->

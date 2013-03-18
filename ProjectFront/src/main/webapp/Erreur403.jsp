@@ -116,10 +116,10 @@ pre.error span.marker {
 </head>
 <body id="play-error-page">
 	<h1>
-		<a href="/Play2v2/Computers"> Kevin database </a>
+		<a href="/Play2v2/Computers.html"> Kevin database </a>
 	</h1>
-	<p id="detail">${nbel}</p>
-	<h2>${message}</h2>
-	<div id="source-code">${error}</div>
+	<p id="detail">Erreur 403</p>
+	<h2>Vous n'avez pas les droits</h2>
+	<div id="source-code">Cette page nécessite un niveau d'administration supérieur au votre</div>
 </body>
 </html>

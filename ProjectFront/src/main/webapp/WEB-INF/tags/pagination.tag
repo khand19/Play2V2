@@ -4,6 +4,7 @@
 <%@ attribute name="numpage" required="true" type="java.lang.Integer" %>
 <%@ attribute name="f" required="true" type="java.lang.String" %>
 <%@ attribute name="s" required="true" type="java.lang.String" %>
+<%@ attribute name="searchC" required="true" type="java.lang.String" %>
 <%@ attribute name="nbel" required="true" type="java.lang.Integer" %>
 	<div id="pagination" class="pagination">
 		<ul>
@@ -16,6 +17,9 @@
 						href="/Play2v2/Computers.html?p=${numpage-1}
 						<c:if test="${f != null}">
 							&f=${f }
+						</c:if>
+						<c:if test="${searchC != null}">
+							&searchC=${searchC }
 						</c:if>
 						<c:if test="${s != null}">&s=${s }</c:if>
 					">&larr;
@@ -42,7 +46,8 @@
 					<li class="next"><a
 						href="/Play2v2/Computers.html?p=${numpage+1}
 						<c:if test="${f != null}">&f=${f }</c:if>
-						<c:if test="${s != null}">&s=${s }</c:if>						
+						<c:if test="${s != null}">&s=${s }</c:if>	
+						<c:if test="${searchC != null}">&searchC=${searchC }</c:if>					
 						">
 							Next &rarr;</a></li>
 				</c:otherwise>

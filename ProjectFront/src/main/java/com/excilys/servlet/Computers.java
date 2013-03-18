@@ -1,10 +1,16 @@
 package com.excilys.servlet;
 
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -24,7 +30,8 @@ import com.excilys.service.IComputerService;
 
 @Controller
 public class Computers {
-
+	private final int NB_EL_PAGE = 10;
+	
 	@Autowired
 	private IComputerService computerService;
 	@Autowired
@@ -52,12 +59,11 @@ public class Computers {
 		}
 
 		ListComputer liste = null;
-		if (f != null && f != "") {
+		if ((f != null && f != "") || (searchC != null && searchC != "")) {
 			String computerRecherche = f;
-			liste = computerService.getComputers(computerRecherche,searchC,
-					numPage * 10, variableDouble);
+			liste = computerService.getComputers(computerRecherche,searchC,generatePageable(variableDouble,numPage));
 		} else {
-			liste = computerService.getComputers(numPage * 10, variableDouble);
+			liste = computerService.getComputers(generatePageable(variableDouble,numPage));
 		}
 		model.addAttribute("computer", liste.getListeComputer());
 		model.addAttribute("nbel", liste.getSize());
@@ -140,5 +146,60 @@ public class Computers {
 			redirectAttributes.addFlashAttribute("update", true);
 			return "redirect:Computers.html";
 		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//-------------------Creation du pageable--------------------------//
+	private Pageable generatePageable(double variableDouble,int numPage) {
+		String name = orderByName(variableDouble);
+		Order o = orderByOrder(variableDouble, name);
+		return (Pageable) new PageRequest(numPage, NB_EL_PAGE, new Sort(o));
+	}
+	
+	private Order orderByOrder(double s, String name) {
+		// String name;
+		Order o = new Order(Direction.ASC, name);
+		if (s < 0) {
+			o = new Order(Direction.DESC, name);
+		}
+		return o;
+	}
+
+	private String orderByName(double s) {
+		String name = "";
+		try {
+			int sprime = (int) s;
+			if (s < 0)
+				sprime *= -1;
+			switch (sprime) {
+			case 1:
+				name = "computer.nameComputer";
+				break;
+			case 2:
+				name = "computer.introducedDate";
+				break;
+			case 3:
+				name = "computer.dscountedDate";
+				break;
+			case 4:
+				name = "company.nameCompany";
+				break;
+			default:
+				name = "computer.nameComputer";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return name;
 	}
 }
