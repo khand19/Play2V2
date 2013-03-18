@@ -51,6 +51,11 @@ public class ComputerDAO implements IComputerDAO {
 	}
 
 	public ListComputer getComputers(String parameter,String searchC, Pageable page2){
+		return generateGetComputer(parameter, searchC, page2);
+	}
+
+	private ListComputer generateGetComputer(String parameter, String searchC,
+			Pageable page2) {
 		QComputer comp = QComputer.computer;
 		QCompany companyQ = QCompany.company;
 		
@@ -88,27 +93,7 @@ public class ComputerDAO implements IComputerDAO {
 
 
 	public ListComputer getComputers(Pageable page2){
-		QComputer comp = QComputer.computer;
-		QCompany companyQ = QCompany.company;
-		JPAQuery query = new JPAQuery(ent).from(comp).leftJoin(comp.company,companyQ).fetch();
-		
-		//nombre d'element
-		int i = (int) query.count();
-		
-		//permet de passer du sort pageable au sort de querydsl
-		for (Sort.Order o : page2.getSort()) {
-            query.orderBy(new OrderSpecifier(o.isAscending() ? com.mysema.query.types.Order.ASC
-                    : com.mysema.query.types.Order.DESC, new PathBuilder(Computer.class, o.getProperty())));
-        }
-		
-		//creation de la liste
-		List<Computer> j = query.offset(page2.getOffset()).limit(10).list(comp);
-		
-		
-		Page<Computer> pc2 = new PageImpl<Computer>(j,page2, i);
-		ListComputer l = new ListComputer(pc2.getContent(),
-				(int) pc2.getTotalElements());
-		return l;
+		return generateGetComputer(null, null, page2);
 	}
 
 	public boolean existComputer(int pIdComputer) {
