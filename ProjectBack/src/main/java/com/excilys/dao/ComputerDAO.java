@@ -85,7 +85,6 @@ public class ComputerDAO implements IComputerDAO {
 		//creation de la liste
 		List<Computer> j = query.offset(page2.getOffset()).limit(10).list(comp);
 		
-		
 		Page<Computer> pc2 = new PageImpl<Computer>(j,page2, i);
 		ListComputer l = new ListComputer(pc2.getContent(),
 				(int) pc2.getTotalElements());
@@ -99,5 +98,37 @@ public class ComputerDAO implements IComputerDAO {
 
 	public boolean existComputer(int pIdComputer) {
 		return repo.exists(pIdComputer);
+	}
+
+	public List<Computer> getComputers(String searchC, String parameter) {
+		QComputer comp = QComputer.computer;
+		QCompany companyQ = QCompany.company;
+		
+		BooleanBuilder bb = new BooleanBuilder();
+
+		if (searchC != null && searchC!="") {
+			bb.and(QComputer.computer.company.nameCompany
+					.containsIgnoreCase(searchC));
+		}
+		if (parameter != null && parameter!="") {
+			bb.and(QComputer.computer.nameComputer
+					.containsIgnoreCase(parameter));
+		}
+		
+		JPAQuery query = new JPAQuery(ent).from(comp).leftJoin(comp.company,companyQ).fetch().where(bb);
+		
+		//nombre d'element
+//		int i = (int) query.count();
+
+		//permet de passer du sort pageable au sort de querydsl
+//		for (Sort.Order o : page2.getSort()) {
+//            query.orderBy(new OrderSpecifier(o.isAscending() ? com.mysema.query.types.Order.ASC
+//                    : com.mysema.query.types.Order.DESC, new PathBuilder(Computer.class, o.getProperty())));
+//        }
+		
+		//creation de la liste
+		List<Computer> j = query.list(comp);
+		
+		return j;
 	}
 }

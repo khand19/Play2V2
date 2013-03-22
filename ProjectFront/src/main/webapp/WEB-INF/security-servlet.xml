@@ -25,6 +25,9 @@
 			always-use-default-target='true' />
 		<logout logout-success-url="/login.jsp"/>
 	</http>
+	
+	<global-method-security secured-annotations="enabled" />
+	
 </beans:beans>
 <!-- 	<authentication-manager> -->
 <!-- 		<authentication-provider> -->

@@ -24,4 +24,6 @@ public interface IComputerDAO {
 	public ListComputer getComputers(Pageable page2);
 	
 	public boolean existComputer(int pIdComputer);
+
+	public List<Computer> getComputers(String filtre, String companyFiltre);
 }

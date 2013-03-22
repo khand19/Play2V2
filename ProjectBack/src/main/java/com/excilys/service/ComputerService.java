@@ -3,9 +3,11 @@ package com.excilys.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +37,7 @@ public class ComputerService implements IComputerService {
 		l.setComputerLog(pComputer.toString());
 		logDao.addLog(l);
 	}
-
+	
 	public Computer getComputerById(int pIdComputer) {
 		Computer c = compDao.getComputerById(pIdComputer);
 		return c;
@@ -71,7 +73,6 @@ public class ComputerService implements IComputerService {
 			logDao.addLog(l);
 	}
 	
-	
 	public ListComputer getComputers(String parameter,String searchC, Pageable page2){
 		ListComputer l = compDao.getComputers(parameter, searchC, page2);
 		return l;
@@ -80,5 +81,9 @@ public class ComputerService implements IComputerService {
 	public ListComputer getComputers(Pageable page2) {
 		ListComputer l = compDao.getComputers(page2);
 		return l;
+	}
+
+	public List<Computer> getComputers(String filtre, String companyFiltre) {
+		return compDao.getComputers(filtre, companyFiltre);
 	}
 }
